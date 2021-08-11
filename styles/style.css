@@ -4,17 +4,18 @@ body
 }
 #game-div
 {
-  border: 3px solid green;
   height: 95vh;
+  background-color: #40403E;
+  padding-top: 2%;
 }
 
 #game-canvas
 {
-  border: 3px solid blue;
   height: 90vh;
   padding-left: 0;
   padding-right: 0;
   margin-left: auto;
   margin-right: auto;
+  background-color: #C3CFA1;
   display: block;
 }

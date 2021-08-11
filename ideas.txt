@@ -1,0 +1,4 @@
+-skins (GameBoy, modern etc)
+-volume
+-left or right rotation
+-gameboy gamepad

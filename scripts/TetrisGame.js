@@ -13,7 +13,7 @@ const BLOCK_SIZE = 75;
 const PIECES = []
 var currentPiece = null;
 
-var gravityDelay = 70;
+var gravityDelay = 20;
 var moveDelay = 4;
 var rotationDelay = 10;
 
@@ -46,7 +46,7 @@ function updateGame(){
         currentPiece.moveLeft();
         moveTimer = 0;
     }
-    if (isKeyPressed('ArrowDown') && moveTimer > moveDelay/2){
+    if (isKeyPressed('ArrowDown')){
         currentPiece.moveDown();
         moveTimer = 0;
     }
@@ -69,9 +69,8 @@ function updateGame(){
 function renderGame(){
     GAME_CONTEXT.clearRect(0, 0, CANVAS_PIXELS_WIDTH, CANVAS_PIXELS_HEIGHT);
     PIECES.forEach(function(piece){
-        GAME_CONTEXT.fillStyle = piece.color;
         piece.blocks.forEach(function(block){
-            GAME_CONTEXT.fillRect(block.x * BLOCK_SIZE, block.y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+            GAME_CONTEXT.drawImage(images[piece.type], block.x * BLOCK_SIZE, block.y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
         });
     });
 }
