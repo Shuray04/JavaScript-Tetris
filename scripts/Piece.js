@@ -105,7 +105,7 @@ class Piece{
         var newBlocks = []
 
         if (this.type == PIECE_I){
-            
+            //continue
         }else{
             newBlocks.push({x: this.blocks[0].x, y: this.blocks[0].y}); 
         }
