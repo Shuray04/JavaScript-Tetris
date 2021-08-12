@@ -3,14 +3,14 @@ var fps = 0;
 onGameResize();
 
 function processGame(){
-    updateGame();
-    renderGame();
+    updateTetris();
+    renderTetris();
 
     fps++;
 }
 
 function resetFps(){
-    console.log(fps);
+    console.log("FPS: " + fps);
     fps = 0;
 }
 

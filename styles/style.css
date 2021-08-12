@@ -1,16 +1,14 @@
-body
-{
+body, html{
   margin: 0%;
+  height: 100%;
 }
-#game-div
-{
-  height: 95vh;
+#game-div{
+  height: 100%;
   background-color: #40403E;
   padding-top: 2%;
 }
 
-#game-canvas
-{
+#game-canvas{
   height: 90vh;
   padding-left: 0;
   padding-right: 0;

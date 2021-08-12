@@ -6,12 +6,10 @@ const PIECE_S = 4;
 const PIECE_T = 5;
 const PIECE_Z = 6;
 
-const rotationAngle = (Math.PI / 180) * 90;
+const rotationAngle = (Math.PI / 180) * -90;
 
 const images = [];
-for (var i = 0; i <= 7; i++){
-    images.push(new Image(75, 75));
-}
+for (var i = 0; i <= 7; i++){ images.push(new Image(0, 0)); }
 
 images[0].src = "img/piece_i.png";
 images[1].src = "img/piece_j.png";
@@ -36,52 +34,45 @@ class Piece{
     }
     
     moveDown(){
-        for (var block in this.blocks){
-            if (this.blocks[block].y+1 > FIELD_HEIGHT){ return false; }
-            for (var otherPieces in PIECES){
-                if (this == PIECES[otherPieces]){ continue; }
-                for (var otherBlocks in PIECES[otherPieces].blocks){
-                    if (this.blocks[block].y+1 == PIECES[otherPieces].blocks[otherBlocks].y 
-                        && this.blocks[block].x == PIECES[otherPieces].blocks[otherBlocks].x){
-                        return false;
-                    }
-                }
-            }
+        const newBlocks = [];
+        for (var i in this.blocks){ newBlocks[i] = Object.assign({}, this.blocks[i]); }
+        newBlocks.forEach(block => block.y++);
+        if (!this.checkCollision(newBlocks)){ 
+            this.blocks = newBlocks; 
+            return true;
         }
-        this.blocks.forEach(block => block.y++);
-        return true;
+        return false;
     }
 
     moveRight(){
-        for (var block in this.blocks){
-            if (this.blocks[block].x+1 > FIELD_LENGTH){ return; }
-            for (var otherPieces in PIECES){
-                if (this == PIECES[otherPieces]){ continue; }
-                for (var otherBlocks in PIECES[otherPieces].blocks){
-                    if (this.blocks[block].y == PIECES[otherPieces].blocks[otherBlocks].y 
-                        && this.blocks[block].x+1 == PIECES[otherPieces].blocks[otherBlocks].x){
-                        return;
-                    }
-                }
-            }
-        }
-        this.blocks.forEach(block => block.x++);
+        const newBlocks = [];
+        for (var i in this.blocks){ newBlocks[i] = Object.assign({}, this.blocks[i]); }
+        newBlocks.forEach(block => block.x++);
+        if (!this.checkCollision(newBlocks)){ this.blocks = newBlocks; }
     }
 
     moveLeft(){
-        for (var block in this.blocks){
-            if (this.blocks[block].x-1 < 0){ return; }
-            for (var otherPieces in PIECES){
-                if (this == PIECES[otherPieces]){ continue; }
-                for (var otherBlocks in PIECES[otherPieces].blocks){
-                    if (this.blocks[block].y == PIECES[otherPieces].blocks[otherBlocks].y 
-                        && this.blocks[block].x-1 == PIECES[otherPieces].blocks[otherBlocks].x){
-                        return;
+        const newBlocks = [];
+        for (var i in this.blocks){ newBlocks[i] = Object.assign({}, this.blocks[i]); }
+        newBlocks.forEach(block => block.x--);
+        if (!this.checkCollision(newBlocks)){ this.blocks = newBlocks; }
+    }
+
+    checkCollision(newBlocks){
+        for (var block in newBlocks){
+            if (newBlocks[block].x < 0 || newBlocks[block].x > FIELD_LENGTH || newBlocks[block].y > FIELD_HEIGHT){ return true; }
+            for (var otherpieces in pieces){
+                if (this == pieces[otherpieces]){ continue; }
+                for (var otherBlocks in pieces[otherpieces].blocks){
+                    if (newBlocks[block].y == pieces[otherpieces].blocks[otherBlocks].y 
+                        && newBlocks[block].x == pieces[otherpieces].blocks[otherBlocks].x){
+                        return true;
                     }
                 }
             }
         }
-        this.blocks.forEach(block => block.x--);
+        renderGame = true;
+        return false;
     }
 
     rotate(){
@@ -91,26 +82,17 @@ class Piece{
         var centerY = this.blocks[0].y;
         var newBlocks = [];
 
-        newBlocks.push({x: this.blocks[0].x, y: this.blocks[0].y}); 
+        newBlocks.push({x: this.blocks[0].x, y: this.blocks[0].y});
 
         for (var block in this.blocks){
             if (block == 0) { continue; }
             var blockX = this.blocks[block].x;
             var blockY = this.blocks[block].y;
-            var newX = Math.round(centerX + (blockX-centerX)*Math.cos(rotationAngle) - (blockY-centerY)*Math.sin(rotationAngle));
-            var newY = Math.round(centerY + (blockX-centerX)*Math.sin(rotationAngle) + (blockY-centerY)*Math.cos(rotationAngle));
-            if (newX < 0 || newX > FIELD_LENGTH || newY > FIELD_HEIGHT){ return; }
-            for (var otherPieces in PIECES){
-                if (this == PIECES[otherPieces]){ continue; }
-                for (var otherBlocks in PIECES[otherPieces].blocks){
-                    if (newY == PIECES[otherPieces].blocks[otherBlocks].y 
-                        && newX == PIECES[otherPieces].blocks[otherBlocks].x){
-                        return;
-                    }
-                }
-            }
-            newBlocks.push({x: newX, y: newY})
+            newBlocks.push({
+                x: Math.round(centerX + (blockX-centerX)*Math.cos(rotationAngle) - (blockY-centerY)*Math.sin(rotationAngle)),
+                y: Math.round(centerY + (blockX-centerX)*Math.sin(rotationAngle) + (blockY-centerY)*Math.cos(rotationAngle))
+            });
         }
-        this.blocks = newBlocks;
+        if (!this.checkCollision(newBlocks)){ this.blocks = newBlocks }
     }
 }
