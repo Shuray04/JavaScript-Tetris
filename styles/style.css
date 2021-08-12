@@ -1,19 +1,19 @@
 body, html{
   margin: 0%;
   height: 100%;
+  background-color: #40403E;
 }
 #game-div{
-  height: 100%;
-  background-color: #40403E;
-  padding-top: 2%;
+  height: 100vH;
+  background-color: red;
+  width: 111vH;
+
+  margin: auto;
 }
 
 #game-canvas{
-  height: 90vh;
-  padding-left: 0;
-  padding-right: 0;
-  margin-left: auto;
-  margin-right: auto;
+  height: 100vh;
+  margin: auto;
   background-color: #C3CFA1;
   display: block;
 }

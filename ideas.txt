@@ -1,4 +1,6 @@
 -skins (GameBoy, modern etc)
 -volume
--left or right rotation
+-left / right rotation
 -gameboy gamepad
+-blink animation
+-highscore Datenbank

@@ -1,12 +1,12 @@
 const GAME_CANVAS = document.getElementById('game-canvas');
 const GAME_CONTEXT = GAME_CANVAS.getContext('2d');
 
-const CANVAS_PIXELS_WIDTH = 750;
-const CANVAS_PIXELS_HEIGHT = 1500;
+const CANVAS_PIXELS_WIDTH = 10/4*3*100;
+const CANVAS_PIXELS_HEIGHT = 18/4*3*100;
 const CANVAS_RATIO = CANVAS_PIXELS_HEIGHT / CANVAS_PIXELS_WIDTH;
 
 const FIELD_LENGTH = 9;
-const FIELD_HEIGHT = 19;
+const FIELD_HEIGHT = 17;
 const BLOCK_SIZE = 75;
 var pieces = [];
 var currentPiece = null;
@@ -49,7 +49,6 @@ function updateTetris(){
     }
     if (isKeyPressed('ArrowDown')){
         currentPiece.moveDown();
-        moveTimer = 0;
     }
     if (isKeyPressed('ArrowUp') && rotationTimer > rotationDelay){
         currentPiece.rotate();
