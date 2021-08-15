@@ -5,8 +5,8 @@ const GAME_SCORE = document.getElementById('score');
 const GAME_LEVEL = document.getElementById('level');
 const GAME_LINES = document.getElementById('lines');
 
-const CANVAS_PIXELS_WIDTH = 10/4*3*100;
-const CANVAS_PIXELS_HEIGHT = 18/4*3*100;
+const CANVAS_PIXELS_WIDTH = 750;
+const CANVAS_PIXELS_HEIGHT = 1350;
 const CANVAS_RATIO = CANVAS_PIXELS_HEIGHT / CANVAS_PIXELS_WIDTH;
 const GAMEBOY_RATIO = 160/144;
 
@@ -27,18 +27,18 @@ var renderGame = false;
 
 function onGameResize()
 {
-    if (GAME_CANVAS.width > GAME_CANVAS.height){
+    /*if (GAME_CANVAS.width > GAME_CANVAS.height){
         GAME_CANVAS.width = GAME_CANVAS.height*(1/CANVAS_RATIO);
     }
     else{
         GAME_CANVAS.height = GAME_CANVAS.width*CANVAS_RATIO;
-    }
-    /*if (GAME_DIV.width > GAME_DIV.height){
+    }*/
+    if (GAME_DIV.width > GAME_DIV.height){
         GAME_DIV.width = GAME_DIV.height*(1/GAMEBOY_RATIO);
     }
     else{
         GAME_DIV.height = GAME_DIV.width*GAMEBOY_RATIO;
-    }*/
+    }
 }
 window.addEventListener("resize", onGameResize);
 

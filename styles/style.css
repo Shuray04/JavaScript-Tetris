@@ -3,31 +3,39 @@ body, html{
   height: 100%;
   background-color: #40403E;
 }
-#game-div{
+
+#game-boy-div{
+  background-color: blue;
   height: 100vH;
+  width: 100vH;
+  margin: auto;
+  display: flex;
+}
+
+#game-div{
   background-color: red;
-  width: 111.1111vH;
+  width: 80vh;
+  height: 72vh;
   margin: auto;
   padding: 0;
   display: flex;
 }
 
 #img-left{
-  height: 100vH;
-  width: 10vH;
-  background-color: blue;
+  height: 72vH;
+  width: 8vH;
   padding: 0;
 }
 
 #img-right{
-  height: 100vH;
-  width: 46vH;
-  background-color: blue;
+  height: 72vH;
+  width: 54vH;
   padding: 0;
 }
 
 #game-canvas{
-  height: 100vh;
+  height: 72vH;
+  width: 40vh;
   margin: auto;
   background-color: #C3CFA1;
   margin-left: 0vh;
