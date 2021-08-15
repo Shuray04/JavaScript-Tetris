@@ -1,9 +1,14 @@
+const GAME_DIV = document.getElementById('game-div');
 const GAME_CANVAS = document.getElementById('game-canvas');
 const GAME_CONTEXT = GAME_CANVAS.getContext('2d');
+const GAME_SCORE = document.getElementById('score');
+const GAME_LEVEL = document.getElementById('level');
+const GAME_LINES = document.getElementById('lines');
 
 const CANVAS_PIXELS_WIDTH = 10/4*3*100;
 const CANVAS_PIXELS_HEIGHT = 18/4*3*100;
 const CANVAS_RATIO = CANVAS_PIXELS_HEIGHT / CANVAS_PIXELS_WIDTH;
+const GAMEBOY_RATIO = 160/144;
 
 const FIELD_LENGTH = 9;
 const FIELD_HEIGHT = 17;
@@ -28,6 +33,12 @@ function onGameResize()
     else{
         GAME_CANVAS.height = GAME_CANVAS.width*CANVAS_RATIO;
     }
+    /*if (GAME_DIV.width > GAME_DIV.height){
+        GAME_DIV.width = GAME_DIV.height*(1/GAMEBOY_RATIO);
+    }
+    else{
+        GAME_DIV.height = GAME_DIV.width*GAMEBOY_RATIO;
+    }*/
 }
 window.addEventListener("resize", onGameResize);
 
@@ -57,7 +68,7 @@ function updateTetris(){
     if (gravityTimer > gravityDelay){
         if (!currentPiece.moveDown()){
             currentPiece.blocks.forEach(function(block){
-                if (block.y == 0){
+                if (block.y == 1){
                     pieces = [];
                     return;
                 }

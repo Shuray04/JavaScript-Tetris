@@ -6,14 +6,47 @@ body, html{
 #game-div{
   height: 100vH;
   background-color: red;
-  width: 111vH;
-
+  width: 111.1111vH;
   margin: auto;
+  padding: 0;
+  display: flex;
+}
+
+#img-left{
+  height: 100vH;
+  width: 10vH;
+  background-color: blue;
+  padding: 0;
+}
+
+#img-right{
+  height: 100vH;
+  width: 46vH;
+  background-color: blue;
+  padding: 0;
 }
 
 #game-canvas{
   height: 100vh;
   margin: auto;
   background-color: #C3CFA1;
-  display: block;
+  margin-left: 0vh;
+}
+
+#score{
+  position: absolute;
+  top: 15vh;
+  left: 155vH;
+}
+
+#level{
+  position: absolute;
+  top: 15vh;
+  left: 155vH;
+}
+
+#lines{
+  position: absolute;
+  top: 15vh;
+  left: 155vH;
 }

@@ -23,13 +23,13 @@ class Piece{
     constructor(type){
         this.type = type;
         switch(type){
-            case PIECE_I: this.blocks = [{x: 4, y: 0}, {x: 3, y: 0}, {x: 5, y: 0}, {x: 6, y: 0}]; break;
-            case PIECE_J: this.blocks = [{x: 4, y: 0}, {x: 3, y: 0}, {x: 5, y: 0}, {x: 5, y: 1}]; break;
-            case PIECE_L: this.blocks = [{x: 4, y: 0}, {x: 3, y: 0}, {x: 5, y: 0}, {x: 3, y: 1}]; break;
-            case PIECE_O: this.blocks = [{x: 4, y: 0}, {x: 5, y: 0}, {x: 4, y: 1}, {x: 5, y: 1}]; break;
-            case PIECE_S: this.blocks = [{x: 4, y: 0}, {x: 3, y: 1}, {x: 4, y: 1}, {x: 5, y: 0}]; break;
-            case PIECE_T: this.blocks = [{x: 4, y: 0}, {x: 4, y: 1}, {x: 3, y: 0}, {x: 5, y: 0}]; break;
-            case PIECE_Z: this.blocks = [{x: 4, y: 0}, {x: 4, y: 1}, {x: 3, y: 1}, {x: 5, y: 0}]; break;           
+            case PIECE_I: this.blocks = [{x: 4, y: 1}, {x: 3, y: 1}, {x: 5, y: 1}, {x: 6, y: 1}]; break;
+            case PIECE_J: this.blocks = [{x: 4, y: 1}, {x: 3, y: 1}, {x: 5, y: 1}, {x: 5, y: 2}]; break;
+            case PIECE_L: this.blocks = [{x: 4, y: 1}, {x: 3, y: 1}, {x: 5, y: 1}, {x: 3, y: 2}]; break;
+            case PIECE_O: this.blocks = [{x: 4, y: 1}, {x: 5, y: 1}, {x: 4, y: 2}, {x: 5, y: 2}]; break;
+            case PIECE_S: this.blocks = [{x: 4, y: 1}, {x: 3, y: 2}, {x: 4, y: 2}, {x: 5, y: 1}]; break;
+            case PIECE_T: this.blocks = [{x: 4, y: 1}, {x: 4, y: 2}, {x: 3, y: 1}, {x: 5, y: 1}]; break;
+            case PIECE_Z: this.blocks = [{x: 4, y: 1}, {x: 4, y: 2}, {x: 3, y: 1}, {x: 5, y: 1}]; break;           
         }
     }
     
