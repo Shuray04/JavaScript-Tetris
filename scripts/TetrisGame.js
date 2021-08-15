@@ -33,11 +33,11 @@ function onGameResize()
     else{
         GAME_CANVAS.height = GAME_CANVAS.width*CANVAS_RATIO;
     }*/
-    if (GAME_DIV.width > GAME_DIV.height){
+    if (window.innerWidth > window.innerHeight){
+        console.log("width: " + window.innerWidth);
         GAME_DIV.width = GAME_DIV.height*(1/GAMEBOY_RATIO);
-    }
-    else{
-        GAME_DIV.height = GAME_DIV.width*GAMEBOY_RATIO;
+    }else{
+        document.getElementById("game-boy-div").width = window.innerWidth;
     }
 }
 window.addEventListener("resize", onGameResize);
