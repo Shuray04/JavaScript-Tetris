@@ -57,6 +57,7 @@ function onGameResize()
     else{
         GAME_CANVAS.height = GAME_CANVAS.width*CANVAS_RATIO;
     }*/
+    var e = document.getElementById("game-boy-div");
 }
 window.addEventListener("resize", onGameResize);
 

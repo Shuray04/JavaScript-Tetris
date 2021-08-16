@@ -1,23 +1,15 @@
-body, html{
+body{
   margin: 0%;
-  height: 100%;
-  min-width: 40vH;
-  min-height: 50vH;
+  overflow: hidden;
+  min-width: 160px;
+  min-height: 144px;
   background-color: #40403E;
-}
-
-#game-boy-div{
-  background-color: blue;
-  height: 100vH;
-  width: 100vH;
-  margin: auto;
-  display: flex;
 }
 
 #game-div{
   background-color: red;
   width: 80vh;
-  height: 72vh;
+  height: 90vH;
   margin: auto;
   padding: 0;
   display: flex;
@@ -26,12 +18,14 @@ body, html{
 #img-left{
   height: 72vH;
   width: 8vH;
+  margin: auto;
   padding: 0;
 }
 
 #img-right{
   height: 72vH;
   width: 54vH;
+  margin: auto;
   padding: 0;
 }
 
