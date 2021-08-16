@@ -1,40 +1,35 @@
 body{
   margin: 0%;
   overflow: hidden;
-  min-width: 160px;
-  min-height: 144px;
   background-color: #40403E;
 }
 
 #game-div{
-  background-color: red;
-  width: 80vh;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 100vH;
   height: 90vH;
-  margin: auto;
   padding: 0;
   display: flex;
 }
 
 #img-left{
-  height: 72vH;
-  width: 8vH;
-  margin: auto;
-  padding: 0;
+  height: 90vH;
+  width: 10vH;
 }
 
 #img-right{
-  height: 72vH;
-  width: 54vH;
-  margin: auto;
-  padding: 0;
+  height: 90vH;
+  width: 40vH;
 }
 
 #game-canvas{
-  height: 72vH;
-  width: 40vh;
-  margin: auto;
+  height: 90vH;
+  width: 50vh;
   background-color: #C3CFA1;
-  margin-left: 0vh;
 }
 
 #score{

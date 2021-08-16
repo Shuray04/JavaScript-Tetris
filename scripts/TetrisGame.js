@@ -1,6 +1,5 @@
 const GAME_DIV = document.getElementById('game-div');
-const GAME_CANVAS = document.getElementById('game-canvas');
-const GAME_CONTEXT = GAME_CANVAS.getContext('2d');
+const GAME_CONTEXT = document.getElementById('game-canvas').getContext('2d');
 const GAME_SCORE = document.getElementById('score');
 const GAME_LEVEL = document.getElementById('level');
 const GAME_LINES = document.getElementById('lines');
@@ -49,21 +48,17 @@ function createBag(){
     return newBag;
 }
 
-function onGameResize()
-{
-    /*if (GAME_CANVAS.width > GAME_CANVAS.height){
-        GAME_CANVAS.width = GAME_CANVAS.height*(1/CANVAS_RATIO);
-    }
-    else{
-        GAME_CANVAS.height = GAME_CANVAS.width*CANVAS_RATIO;
-    }*/
-    var e = document.getElementById("game-boy-div");
+function isOverflown(element) {
+    return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+}
+
+function onGameResize(){
+    
 }
 window.addEventListener("resize", onGameResize);
 
 
 function updateTetris(){
-    //Handle playerinput + gravity
     if (currentPiece == null){
         if (bag.length == 0){
             bag = createBag();
@@ -97,7 +92,6 @@ function updateTetris(){
                 }
             });
             currentPiece = null;
-            //check if a line is completed
             var field = [];
             for (var i = 0; i <= FIELD_HEIGHT; i++){ field.push([]); }
             pieces.forEach(function(piece){
@@ -105,7 +99,6 @@ function updateTetris(){
                     if (block.y >= 0){ field[block.y].push({piece: piece, block: block}); }
                 });
             });
-
             var removedLines = [];
             field.forEach(function(line){
                 if (line.length > FIELD_LENGTH){
@@ -122,7 +115,6 @@ function updateTetris(){
                 }
             });
 
-            //Check if a Piece can be completly removed
             pieces.forEach(function(piece){
                 if (piece.blocks.length == 0){
                     pieces.splice(pieces.indexOf(piece), 1);
