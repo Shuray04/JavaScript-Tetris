@@ -1,6 +1,5 @@
 const GAME_DIV = document.getElementById('game-div');
-const GAME_CANVAS = document.getElementById('game-canvas');
-const GAME_CONTEXT = GAME_CANVAS.getContext('2d');
+const GAME_CONTEXT = document.getElementById('game-canvas').getContext('2d');
 const GAME_SCORE = document.getElementById('score');
 const GAME_LEVEL = document.getElementById('level');
 const GAME_LINES = document.getElementById('lines');
@@ -25,8 +24,37 @@ var moveTimer = 0;
 var rotationTimer = 0;
 var renderGame = false;
 
-function onGameResize()
-{
+var level = 0;
+var score = 0;
+var lines = 0;
+var nextPiece = Math.floor(Math.random() * 7);
+
+function createBag(){
+    var newBag = [];
+    for (var i = 0; i < 7; i++){
+        var isNew = false;
+        var newItem = 0;
+        while (!isNew){
+            newItem = Math.floor(Math.random() * 8);
+            for (var item in newBag){
+                if (newItem == newBag[item]){
+                    isNew = false;
+                    break;
+                }else{
+                    isNew = true;
+                }
+            }
+        }
+        newBag.push(newItem);
+    }
+    return newBag;
+}
+
+var bag = createBag();
+console.log(bag);
+
+
+function onGameResize(){
     /*if (GAME_CANVAS.width > GAME_CANVAS.height){
         GAME_CANVAS.width = GAME_CANVAS.height*(1/CANVAS_RATIO);
     }
@@ -46,7 +74,11 @@ window.addEventListener("resize", onGameResize);
 function updateTetris(){
     //Handle playerinput + gravity
     if (currentPiece == null){
-        currentPiece = new Piece(Math.floor(Math.random() * 7));
+        if (bag.length == 0){
+            bag = createBag();
+        }
+        currentPiece = new Piece(bag[0]);
+        bag.splice(0, 1);
         pieces.push(currentPiece);
         renderGame = true;
     }
