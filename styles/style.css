@@ -6,9 +6,9 @@
 body{
   margin: 0%;
   overflow: hidden;
-  background-color: #40403E;
+  background-color: black;
   font-family: Tetris;
-  font-size: 4.3vh;
+  font-size: 5vh;
   color: #414141;
 }
 

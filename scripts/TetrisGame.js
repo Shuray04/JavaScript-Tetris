@@ -63,9 +63,6 @@ function updateTetris(){
     if (removeAnimation){
         removeLineCounter++;
         if (removeLineCounter >= 93){
-            removeLineCounter = 0;
-            renderGame = true;
-            removeAnimation = false;
             removableLines.forEach(function(line){
                 line.forEach(function(item){ item.piece.blocks.splice(item.piece.blocks.indexOf(item.block), 1); });
                 pieces.forEach(function(piece){
@@ -76,6 +73,10 @@ function updateTetris(){
                     });
                 });
             });
+            removableLines = [];
+            removeLineCounter = 0;
+            renderGame = true;
+            removeAnimation = false;
         }
         return;
     }
@@ -146,7 +147,6 @@ function renderTetris(){
         pieces.forEach(function(piece){
             piece.blocks.forEach(function(block){
                 GAME_CONTEXT.drawImage(images[piece.type], block.x * BLOCK_SIZE, block.y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-                //GAME_CONTEXT.putImageData(images[piece.type], block.x * BLOCK_SIZE, block.y * BLOCK_SIZE);
             });
         });
         renderGame = false;
