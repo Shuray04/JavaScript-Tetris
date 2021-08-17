@@ -1,7 +1,15 @@
+@font-face {
+  font-family: Tetris;
+  src: url("../font/tetris.ttf");
+}
+
 body{
   margin: 0%;
   overflow: hidden;
   background-color: #40403E;
+  font-family: Tetris;
+  font-size: 4.3vh;
+  color: #414141;
 }
 
 #game-div{
@@ -34,8 +42,8 @@ body{
 
 #score{
   position: absolute;
-  top: 15vh;
-  left: 155vH;
+  top: 11.5%;
+  right: 4.5%;
 }
 
 #level{
