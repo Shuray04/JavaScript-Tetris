@@ -1,13 +1,12 @@
-#!/usr/bin/env python3
-
 import socket
+from time import sleep
 
-HOST = '18.195.200.31'  # The server's hostname or IP address
-PORT = 65432        # The port used by the server
+HOST = '18.192.119.166' 
+PORT = 27777
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.connect((HOST, PORT))
-    s.sendall(b'Hello, world')
-    data = s.recv(1024)
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((HOST, PORT))
 
-print('Received', repr(data))
+while True:
+    msg = s.recv(1024)
+    print(msg.decode("utf-8"))

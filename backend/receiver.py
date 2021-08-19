@@ -1,18 +1,17 @@
-#!/usr/bin/env python3
-
 import socket
+from time import sleep
 
-HOST = '127.0.0.53'  # Standard loopback interface address (localhost)
-PORT = 65432        # Port to listen on (non-privileged ports are > 1023)
+PORT = 27777
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind((HOST, PORT))
-    s.listen()
-    conn, addr = s.accept()
-    with conn:
-        print('Connected by', addr)
-        while True:
-            data = conn.recv(1024)
-            if not data:
-                break
-            conn.sendall(data)
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+s.bind((socket.gethostname(), PORT))
+s.listen(5)
+
+conn, addr = s.accept()
+print(f"Connection from {addr} has been established")
+
+while True:
+    sleep(5)
+    conn.send(bytes("Hello World", "utf-8"))
+    print("sent package")
