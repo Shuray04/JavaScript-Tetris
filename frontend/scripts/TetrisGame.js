@@ -1,4 +1,3 @@
-const GAME_DIV = document.getElementById('game-div');
 const GAME_CONTEXT = document.getElementById('game-canvas').getContext('2d');
 GAME_CONTEXT.imageSmoothingEnabled = false;
 const GAME_SCORE = document.getElementById('score');
@@ -10,7 +9,7 @@ const CANVAS_PIXELS_HEIGHT = 1350;
 
 const FIELD_LENGTH = 9;
 const FIELD_HEIGHT = 17;
-const BLOCK_SIZE = 32;
+const BLOCK_SIZE = 40;
 var pieces = [];
 var currentPiece = null;
 

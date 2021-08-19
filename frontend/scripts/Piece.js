@@ -11,13 +11,13 @@ const rotationAngle = (Math.PI / 180) * -90;
 const images = [];
 for (var i = 0; i <= 7; i++){ images.push(new Image(0, 0)); }
 
-images[0].src = "img/piece_i.png";
-images[1].src = "img/piece_j.png";
-images[2].src = "img/piece_l.png";
-images[3].src = "img/piece_o.png";
-images[4].src = "img/piece_s.png";
-images[5].src = "img/piece_t.png";
-images[6].src = "img/piece_z.png";
+images[0].src = "img/piece_texture/piece_i.png";
+images[1].src = "img/piece_texture/piece_j.png";
+images[2].src = "img/piece_texture/piece_l.png";
+images[3].src = "img/piece_texture/piece_o.png";
+images[4].src = "img/piece_texture/piece_s.png";
+images[5].src = "img/piece_texture/piece_t.png";
+images[6].src = "img/piece_texture/piece_z.png";
 
 class Piece{
     constructor(type){
