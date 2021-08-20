@@ -52,13 +52,7 @@ function createBag(){
     return newBag;
 }
 
-/*function onGameResize(){
-    
-}
-window.addEventListener("resize", onGameResize);
-*/
-
-function updateTetris(){
+function update(){
     //Updates the remove Animation if a piece is removed
     if (removeAnimation){
         removeLineCounter++;
@@ -144,12 +138,25 @@ function updateTetris(){
     rotationTimer++;
 }
 
-function renderTetris(){
+function renderBlock(type, block){
+    GAME_CONTEXT.translate(block.x * BLOCK_SIZE, block.y * BLOCK_SIZE);
+    if (type != 6){
+        GAME_CONTEXT.drawImage(images[type], 0, 0, BLOCK_SIZE, BLOCK_SIZE);
+    }else{ //Piece is an I
+        //GAME_CONTEXT.rotate(Math.toRadians(block.rot%360));
+        GAME_CONTEXT.drawImage(images[block.texId], 0, 0, BLOCK_SIZE, BLOCK_SIZE);
+        console.log(block.rot%360);
+        //GAME_CONTEXT.rotate(Math.toRadians(-block.rot%360));
+    }
+    GAME_CONTEXT.translate(-block.x * BLOCK_SIZE, -block.y * BLOCK_SIZE);
+}
+
+function render(){
     if (renderGame){
         GAME_CONTEXT.clearRect(0, 0, CANVAS_PIXELS_WIDTH, CANVAS_PIXELS_HEIGHT);
         pieces.forEach(function(piece){
             piece.blocks.forEach(function(block){
-                GAME_CONTEXT.drawImage(images[piece.type], block.x * BLOCK_SIZE, block.y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+                renderBlock(piece.type, block);
             });
         });
         renderGame = false;
@@ -162,7 +169,7 @@ function renderTetris(){
                     GAME_CONTEXT.fillStyle = "#C3CFA1";
                     GAME_CONTEXT.fillRect(item.block.x * BLOCK_SIZE, item.block.y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);   
                 }else{
-                    GAME_CONTEXT.drawImage(images[item.piece.type], item.block.x * BLOCK_SIZE, item.block.y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+                    renderBlock(piece.type, block);
                 }
             });
         });
