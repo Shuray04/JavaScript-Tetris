@@ -1,16 +1,47 @@
 @font-face {
   font-family: Tetris;
-  -webkit-font-smoothing: none;
   src: url("../font/tetris.ttf");
 }
 
 body{
   margin: 0%;
   overflow: hidden;
-  background-color: black;
+  background: C1BBBB;
   font-family: Tetris;
   font-size: 5vh;
   color: #414141;
+}
+
+#game-boy-div{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 150vh;
+  height: 99vH;
+  background: black;
+  border-radius: 5vH;
+  border-bottom-right-radius: 20vh;
+}
+
+#battery-light{
+  border-radius: 100%;
+  width: 4vH;
+  height: 4vH;
+  background: red;
+  position: absolute;
+  top: 35%;
+  left: 7.5%;
+}
+
+#battery-text{
+  font-size: 1;
+  position: absolute;
+  font-size: 3vH;
+  color: antiquewhite;
+  top: 40%;
+  left: 2%;
 }
 
 #game-div{
@@ -46,7 +77,6 @@ body{
   right: 9.5%;
 }
 
-
 img, canvas{ 
   image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
   image-rendering: -moz-crisp-edges;          /* Firefox                        */
@@ -55,5 +85,4 @@ img, canvas{
   image-rendering: pixelated;                 /* Chrome */
   image-rendering: optimize-contrast;         /* CSS3 Proposed                  */
   -ms-interpolation-mode: nearest-neighbor;   /* IE8+                           */
-
 }

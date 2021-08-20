@@ -8,15 +8,22 @@
     </head>
 
     <body>
+        <div id="game-boy-div">
+            <div id="battery-light"></div>
+            <div id="battery-text"> BATTERY </div>
+        </div>
+        <!-- <div id="highscore-div">
+            <input type="text" id="player-name" name="player-name" maxlength="18">
+        </div> -->
+        
         <div id="game-div"> 
             <img src="img/game_left.png"> </img> 
-            <canvas id="game-canvas" width = 400 height = 720></canvas>
+            <canvas id="game-canvas" width = 80 height = 144></canvas>
             <img src="img/game_right.png">
                 <p id="score">29</p>
                 <p id="level">29</p>
                 <p id="lines">29</p>
             </img>
-            
         </div>
         <script src="scripts/Piece.js"> </script>
         <script src="scripts/Input.js"> </script>

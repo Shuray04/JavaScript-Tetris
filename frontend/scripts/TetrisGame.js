@@ -9,7 +9,7 @@ const CANVAS_PIXELS_HEIGHT = 1350;
 
 const FIELD_LENGTH = 9;
 const FIELD_HEIGHT = 17;
-const BLOCK_SIZE = 40;
+const BLOCK_SIZE = 8;
 var pieces = [];
 var currentPiece = null;
 
@@ -23,6 +23,7 @@ var rotationTimer = 0;
 var removeLineCounter = 0; //93 Frames per removed line
 
 var renderGame = false;
+var gameStarted = false;
 
 var removeAnimation = false;
 var field = [];
@@ -58,6 +59,7 @@ window.addEventListener("resize", onGameResize);
 */
 
 function updateTetris(){
+    //Updates the remove Animation if a piece is removed
     if (removeAnimation){
         removeLineCounter++;
         if (removeLineCounter >= 93){
@@ -65,9 +67,7 @@ function updateTetris(){
                 line.forEach(function(item){ item.piece.blocks.splice(item.piece.blocks.indexOf(item.block), 1); });
                 pieces.forEach(function(piece){
                     piece.blocks.forEach(function(block){
-                        if (block.y < field.indexOf(line)){
-                            block.y++;
-                        }
+                        if (block.y < field.indexOf(line)) block.y++;
                     });
                 });
             });
@@ -79,6 +79,7 @@ function updateTetris(){
         return;
     }
 
+    //Checks if a new piece has to be spawned
     if (currentPiece == null){
         if (bag.length == 0){
             bag = createBag();
@@ -88,6 +89,8 @@ function updateTetris(){
         pieces.push(currentPiece);
         renderGame = true;
     }
+
+    //player input handling
     if (isKeyPressed('ArrowRight') && moveTimer > moveDelay){
         currentPiece.moveRight();
         moveTimer = 0;
@@ -103,6 +106,8 @@ function updateTetris(){
         currentPiece.rotate();
         rotationTimer = 0;
     }
+
+    //applying gravity
     if (gravityTimer > gravityDelay){
         if (!currentPiece.moveDown()){
             currentPiece.blocks.forEach(function(block){
@@ -113,10 +118,10 @@ function updateTetris(){
             });
             currentPiece = null;
             field = [];
-            for (var i = 0; i <= FIELD_HEIGHT; i++){ field.push([]); }
+            for (var i = 0; i <= FIELD_HEIGHT; i++) field.push([]);
             pieces.forEach(function(piece){
                 piece.blocks.forEach(function(block){
-                    if (block.y >= 0){ field[block.y].push({piece: piece, block: block}); }
+                    if (block.y >= 0) field[block.y].push({piece: piece, block: block}); 
                 });
             });
             field.forEach(function(line){
@@ -151,19 +156,15 @@ function renderTetris(){
     }
     if (removeAnimation){
         if (removeLineCounter % 10 == 0){ blink = !blink; }
-        if (blink){
-            removableLines.forEach(function(line){
-                line.forEach(function(item){
+        removableLines.forEach(function(line){
+            line.forEach(function(item){
+                if (blink){
                     GAME_CONTEXT.fillStyle = "#C3CFA1";
                     GAME_CONTEXT.fillRect(item.block.x * BLOCK_SIZE, item.block.y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);   
-                });
-            });
-        }else{
-            removableLines.forEach(function(line){
-                line.forEach(function(item){
+                }else{
                     GAME_CONTEXT.drawImage(images[item.piece.type], item.block.x * BLOCK_SIZE, item.block.y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-                });
+                }
             });
-        }
+        });
     }
 }

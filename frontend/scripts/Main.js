@@ -2,8 +2,12 @@ var fps = 0;
 
 
 function processGame(){
-    updateTetris();
-    renderTetris();
+    if (gameStarted){
+        updateTetris();
+        renderTetris();
+    }else{
+        gameStarted = isAnyKeyPressed();
+    }
     fps++;
 }
 

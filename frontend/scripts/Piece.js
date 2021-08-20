@@ -48,21 +48,21 @@ class Piece{
         const newBlocks = [];
         for (var i in this.blocks){ newBlocks[i] = Object.assign({}, this.blocks[i]); }
         newBlocks.forEach(block => block.x++);
-        if (!this.checkCollision(newBlocks)){ this.blocks = newBlocks; }
+        if (!this.checkCollision(newBlocks)) this.blocks = newBlocks;
     }
 
     moveLeft(){
         const newBlocks = [];
         for (var i in this.blocks){ newBlocks[i] = Object.assign({}, this.blocks[i]); }
         newBlocks.forEach(block => block.x--);
-        if (!this.checkCollision(newBlocks)){ this.blocks = newBlocks; }
+        if (!this.checkCollision(newBlocks)) this.blocks = newBlocks;
     }
 
     checkCollision(newBlocks){
         for (var block in newBlocks){
-            if (newBlocks[block].x < 0 || newBlocks[block].x > FIELD_LENGTH || newBlocks[block].y > FIELD_HEIGHT){ return true; }
+            if (newBlocks[block].x < 0 || newBlocks[block].x > FIELD_LENGTH || newBlocks[block].y > FIELD_HEIGHT) return true;
             for (var otherpieces in pieces){
-                if (this == pieces[otherpieces]){ continue; }
+                if (this == pieces[otherpieces]) continue; 
                 for (var otherBlocks in pieces[otherpieces].blocks){
                     if (newBlocks[block].y == pieces[otherpieces].blocks[otherBlocks].y 
                         && newBlocks[block].x == pieces[otherpieces].blocks[otherBlocks].x){
@@ -76,7 +76,7 @@ class Piece{
     }
 
     rotate(){
-        if (this.type == PIECE_O){ return; }
+        if (this.type == PIECE_O) return; 
 
         var centerX = this.blocks[0].x;
         var centerY = this.blocks[0].y;
@@ -85,7 +85,7 @@ class Piece{
         newBlocks.push({x: this.blocks[0].x, y: this.blocks[0].y});
 
         for (var block in this.blocks){
-            if (block == 0) { continue; }
+            if (block == 0) continue;
             var blockX = this.blocks[block].x;
             var blockY = this.blocks[block].y;
             newBlocks.push({
@@ -93,6 +93,6 @@ class Piece{
                 y: Math.round(centerY + (blockX-centerX)*Math.sin(rotationAngle) + (blockY-centerY)*Math.cos(rotationAngle))
             });
         }
-        if (!this.checkCollision(newBlocks)){ this.blocks = newBlocks }
+        if (!this.checkCollision(newBlocks)) this.blocks = newBlocks;
     }
 }
