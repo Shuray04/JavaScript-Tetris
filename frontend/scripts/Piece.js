@@ -97,7 +97,7 @@ class Piece{
         if (!this.checkCollision(newBlocks)){
             if (this.type == PIECE_I){
                 for (var block in this.blocks){
-                    newBlocks[block]["rot"] = this.blocks[block].rot+90;
+                    newBlocks[block]["rot"] = this.blocks[block].rot+270;
                     newBlocks[block]["texId"] = this.blocks[block].texId;
                 }
             }
