@@ -138,21 +138,15 @@ function update(){
     rotationTimer++;
 }
 
-function degreesToRadians(degrees){
-  return degrees * (Math.PI/180);
-}
-
 function renderBlock(type, block){
     GAME_CONTEXT.translate(block.x * BLOCK_SIZE, block.y * BLOCK_SIZE);
     if (type != 6){
         GAME_CONTEXT.drawImage(images[type], 0, 0, BLOCK_SIZE, BLOCK_SIZE);
     }else{ //Piece is an I
- 
-        GAME_CONTEXT.translate(BLOCK_SIZE/2, BLOCK_SIZE/2);
-        GAME_CONTEXT.rotate(degreesToRadians(block.rot));
-        GAME_CONTEXT.drawImage(images[block.texId], -BLOCK_SIZE/2, -BLOCK_SIZE/2, BLOCK_SIZE, BLOCK_SIZE);
-        GAME_CONTEXT.rotate(degreesToRadians(-block.rot));
-        GAME_CONTEXT.translate(-BLOCK_SIZE/2, -BLOCK_SIZE/2);
+        //GAME_CONTEXT.rotate(Math.toRadians(block.rot%360));
+        GAME_CONTEXT.drawImage(images[block.texId], 0, 0, BLOCK_SIZE, BLOCK_SIZE);
+        console.log(block.rot%360);
+        //GAME_CONTEXT.rotate(Math.toRadians(-block.rot%360));
     }
     GAME_CONTEXT.translate(-block.x * BLOCK_SIZE, -block.y * BLOCK_SIZE);
 }
@@ -175,7 +169,7 @@ function render(){
                     GAME_CONTEXT.fillStyle = "#C3CFA1";
                     GAME_CONTEXT.fillRect(item.block.x * BLOCK_SIZE, item.block.y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);   
                 }else{
-                    renderBlock(item.piece.type, item.block);
+                    renderBlock(piece.type, block);
                 }
             });
         });
