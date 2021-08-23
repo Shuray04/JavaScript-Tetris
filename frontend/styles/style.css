@@ -53,6 +53,19 @@ body{
   width: 100vH;
   height: 90vH;
   display: flex;
+  visibility: hidden;
+}
+
+#main-menu{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 100vH;
+  height: 90vH;
+  display: flex;
+  visibility: visible;
 }
 
 #game-canvas{

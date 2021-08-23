@@ -7,6 +7,10 @@ function processGame(){
         render();
     }else{
         gameStarted = isAnyKeyPressed();
+        if (gameStarted){
+            document.getElementById('main-menu').style.visibility = 'hidden';
+            document.getElementById('game-div').style.visibility = 'visible';
+        }
     }
     fps++;
 }
