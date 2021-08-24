@@ -1,25 +1,3 @@
-const PIECE_Z = 0;
-const PIECE_J = 1;
-const PIECE_L = 2;
-const PIECE_O = 3;
-const PIECE_S = 4;
-const PIECE_T = 5;
-const PIECE_I = 6;
-
-const rotationAngle = (Math.PI / 180) * -90;
-
-const images = [];
-for (var i = 0; i < 8; i++){ images.push(new Image(0, 0)); }
-
-images[0].src = "img/piece_texture/piece_z.png";
-images[1].src = "img/piece_texture/piece_j.png";
-images[2].src = "img/piece_texture/piece_l.png";
-images[3].src = "img/piece_texture/piece_o.png";
-images[4].src = "img/piece_texture/piece_s.png";
-images[5].src = "img/piece_texture/piece_t.png";
-images[6].src = "img/piece_texture/piece_i_mid.png";
-images[7].src = "img/piece_texture/piece_i_top.png";
-
 class Piece{
     constructor(type){
         this.type = type;
