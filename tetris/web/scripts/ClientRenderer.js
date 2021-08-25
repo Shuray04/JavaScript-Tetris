@@ -73,20 +73,3 @@ function render(pieces){
         });
     }
 }
-
-const socket = io();
-
-socket.on("connect", () => {
-    console.log("biiiit connneeeect");
-});
-
-socket.on("message", (data) => {
-    console.log(data);
-    render(data);
-});
-
-function getInformation(){
-    socket.send(true);
-}
-
-

@@ -1,22 +1,25 @@
 var express = require('express');
+var tetris = require("./TetrisGame.js");
 const APP = express();
 APP.use(express.static(__dirname + '/web'));
 
 const HTTP = require('http').createServer(APP);
 const IO = require('socket.io')(HTTP);
 
-var connections = [];
+var connections = {};
 
 
 IO.on('connection', function(socket){
-  connections.push(socket);
+  connections[socket.id] = {
+    socket: socket,
+    game: new TetrisGame()
+  }
   socket.send([1, 2, 3, 4, 5]);
   console.log("Connection from: ", socket.id);
-  socket.on("message", (data) => {
-    if (data){
-      socket.send("------------------------------------------------");
-    }
-  });
+  socket.on("message", (input) => {
+      connections[socket.id][game].update(input);
+      socket.send(connections[socket.id][game].pieces);
+    });
 });
 
 

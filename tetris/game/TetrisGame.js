@@ -1,4 +1,4 @@
-class GameHandler{
+class TetrisGame{
     constructor(){
         this.FIELD_LENGTH = 9;
         this.FIELD_HEIGHT = 17;
@@ -45,7 +45,7 @@ class GameHandler{
         return newBag;
     }
 
-    update(){
+    update(input){
         //Updates the remove Animation if a piece is removed
         if (removeAnimation){
             removeLineCounter++;
@@ -78,18 +78,18 @@ class GameHandler{
         }
     
         //player input handling
-        if (isKeyPressed('ArrowRight') && moveTimer > moveDelay){
+        if (input[right] && moveTimer > moveDelay){
             currentPiece.moveRight();
             moveTimer = 0;
         }
-        if (isKeyPressed('ArrowLeft') && moveTimer > moveDelay){
+        if (input[left] && moveTimer > moveDelay){
             currentPiece.moveLeft();
             moveTimer = 0;
         }
-        if (isKeyPressed('ArrowDown')){
+        if (input[down]){
             currentPiece.moveDown();
         }
-        if (isKeyPressed('ArrowUp') && rotationTimer > rotationDelay){
+        if (input[up] && rotationTimer > rotationDelay){
             currentPiece.rotate();
             rotationTimer = 0;
         }
