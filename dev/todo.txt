@@ -1,6 +1,9 @@
 database insertion
 mobile optimisation
 make game tetris game screen smoller -> Bigger Gameboy
-go over code (rework for loops, )
-no client request -> Server sends data automatically every frame
-implement worker threads
+
+- performance
+    - go over code (rework for loops, rotation)
+    - no client request -> Server sends data automatically every frame
+    - only send new data -> store not moving pieces in frontend
+    - implement worker threads

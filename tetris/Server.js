@@ -20,10 +20,10 @@ IO.on('connection', function(socket){
       connections[socket.id].game.update(input);
       if (connections[socket.id].game.renderGame){
         socket.send(connections[socket.id].game.pieces);
+        console.log("sent package");
       }
     });
 });
-
 
 HTTP.listen(8000, function(){
   console.log('Server listening');
@@ -31,10 +31,11 @@ HTTP.listen(8000, function(){
 
 
 setInterval(function(){
-  /*for (connection of connections){
-    if (!connection.socket.connected){
+  for (var connection of Object.entries(connections)){
+    console.log(connection);
+    if (!connection.socket.id){
       delete connections(connection);
     }
-  }*/
+  }
   console.log(Object.keys(connections).length);
 }, 1000);

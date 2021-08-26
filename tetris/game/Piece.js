@@ -28,31 +28,41 @@ class Piece{
         const newBlocks = [];
         for (var i in this.blocks){ newBlocks[i] = Object.assign({}, this.blocks[i]); }
         newBlocks.forEach(block => block.y++);
-        if (!this.checkCollision(newBlocks, pieces)){ 
-            this.blocks = newBlocks; 
+        if (this.checkCollision(newBlocks, pieces)){ 
+            return false;
+        }else{
+            this.blocks = newBlocks;
             return true;
         }
-        return false;
     }
 
     moveRight(pieces){
         const newBlocks = [];
         for (var i in this.blocks){ newBlocks[i] = Object.assign({}, this.blocks[i]); }
         newBlocks.forEach(block => block.x++);
-        if (!this.checkCollision(newBlocks, pieces)) this.blocks = newBlocks;
+        if (this.checkCollision(newBlocks, pieces)){ 
+            return false;
+        }else{
+            this.blocks = newBlocks;
+            return true;
+        }
     }
 
     moveLeft(pieces){
         const newBlocks = [];
         for (var i in this.blocks){ newBlocks[i] = Object.assign({}, this.blocks[i]); }
         newBlocks.forEach(block => block.x--);
-        if (!this.checkCollision(newBlocks, pieces)) this.blocks = newBlocks;
+        if (this.checkCollision(newBlocks, pieces)){ 
+            return false;
+        }else{
+            this.blocks = newBlocks;
+            return true;
+        }
     }
 
     checkCollision(newBlocks, pieces){
         for (var block in newBlocks){
             if (newBlocks[block].x < 0 || newBlocks[block].x > FIELD_LENGTH || newBlocks[block].y > FIELD_HEIGHT) {
-                console.log("dsfsdfsdfdsfdsf");
                 return true;
             }
             for (var otherpieces in pieces){
@@ -65,7 +75,6 @@ class Piece{
                 }
             }
         }
-        //renderGame = true;
         return false;
     }
 

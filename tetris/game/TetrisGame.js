@@ -50,6 +50,7 @@ class TetrisGame{
 
     update(input){
         //Updates the remove Animation if a piece is removed
+        this.renderGame = false;
         if (this.removeAnimation){
             this.removeLineCounter++;
             if (this.removeLineCounter >= 93){
@@ -71,9 +72,7 @@ class TetrisGame{
     
         //Checks if a new piece has to be spawned
         if (this.currentPiece == null){
-            if (this.bag.length == 0){
-                this.bag = createBag();
-            }
+            if (this.bag.length == 0) this.bag = createBag();
             this.currentPiece = new Piece(this.bag[0]);
             this.bag.splice(0, 1);
             this.pieces.push(this.currentPiece);
@@ -82,15 +81,15 @@ class TetrisGame{
     
         //player input handling
         if (input.right && this.moveTimer > this.moveDelay){
-            this.currentPiece.moveRight(this.pieces);
+            if (this.currentPiece.moveRight(this.pieces)) this.renderGame = true;
             this.moveTimer = 0;
         }
         if (input.left && this.moveTimer > this.moveDelay){
-            this.currentPiece.moveLeft(this.pieces);
+            if (this.currentPiece.moveLeft(this.pieces)) this.renderGame = true;
             this.moveTimer = 0;
         }
         if (input.down){
-            this.currentPiece.moveDown(this.pieces);
+            if (this.currentPiece.moveDown(this.pieces)) this.renderGame = true;
         }
         if (input.up && this.rotationTimer > this.rotationDelay){
             this.currentPiece.rotate(this.pieces);
@@ -100,21 +99,20 @@ class TetrisGame{
         //applying gravity
         if (this.gravityTimer > this.gravityDelay){
             if (!this.currentPiece.moveDown(this.pieces)){
-                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                this.currentPiece.blocks.forEach(function(block){
+                for (var block of this.currentPiece.blocks){
                     if (block.y == 1){
                         this.pieces = [];
                         return;
                     }
-                });
+                }
                 this.currentPiece = null;
                 this.field = [];
                 for (var i = 0; i <= FIELD_HEIGHT; i++) this.field.push([]);
-                this.pieces.forEach(function(piece){
-                    piece.blocks.forEach(function(block){
+                for (var piece of this.pieces){
+                    for (var block of piece.blocks){
                         if (block.y >= 0) this.field[block.y].push({piece: piece, block: block}); 
-                    });
-                });
+                    }
+                }
                 this.field.forEach(function(line){
                     if (line.length > FIELD_LENGTH){
                         this.removeAnimation = true;
@@ -127,6 +125,8 @@ class TetrisGame{
                         this.pieces.splice(this.pieces.indexOf(piece), 1);
                     }
                 });
+            }else{
+                this.renderGame = true;
             }
             this.gravityTimer = 0;
         }
