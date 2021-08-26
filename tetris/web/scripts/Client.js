@@ -12,7 +12,15 @@ socket.on("connect", () => {
 socket.on("message", (data) => {
     endTime = Date.now();
     console.log("received package in: ", endTime - startTime);
-    render(data);
+    if (pieces.length < data.amountOfPieces && data.currentPiece != null){
+        pieces.push(data.currentPiece);
+    }else if (pieces.length = data.amountOfPieces && data.currentPiece != null){
+        pieces[pieces.length-1] = data.currentPiece;
+    }
+    if (data.resetBlocks != false){
+        pieces = data.resetBlocks;
+    }
+    render(data.removeLineCounter, data.removableLines);
 });
 
 function demandGameUpdate(){
@@ -27,7 +35,7 @@ function demandGameUpdate(){
             gameStarted = true;
             document.getElementById('main-menu').style.visibility = 'hidden';
             document.getElementById('game-div').style.visibility = 'visible';
-            socket.send(input);
+            //socket.send(input);
             return;
         }
     }else{
@@ -36,4 +44,4 @@ function demandGameUpdate(){
     }
 }
 
-window.setInterval(demandGameUpdate, 100);
+window.setInterval(demandGameUpdate, 17);

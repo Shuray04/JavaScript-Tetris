@@ -44,7 +44,6 @@ class TetrisGame{
         this.removeAnimation = false;
         this.field = [];
         this.removableLines = [];
-        this.blink = false;
         this.bag = createBag();
     }
 
@@ -52,16 +51,17 @@ class TetrisGame{
         //Updates the remove Animation if a piece is removed
         this.renderGame = false;
         if (this.removeAnimation){
+            if (this.removeLineCounter % 10 == 0) this.renderGame = true;
             this.removeLineCounter++;
             if (this.removeLineCounter >= 93){
-                this.removableLines.forEach(function(line){
-                    line.forEach(function(item){ item.piece.blocks.splice(item.piece.blocks.indexOf(item.block), 1); });
-                    this.pieces.forEach(function(piece){
-                        piece.blocks.forEach(function(block){
+                for (var line of this.removableLines){
+                    for (var item of line) item.piece.blocks.splice(item.piece.blocks.indexOf(item.block), 1);
+                    for(var piece of this.pieces){
+                        for(var block of piece.blocks){
                             if (block.y < this.field.indexOf(line)) block.y++;
-                        });
-                    });
-                });
+                        }
+                    }
+                }
                 this.removableLines = [];
                 this.removeLineCounter = 0;
                 this.renderGame = true;
@@ -113,18 +113,17 @@ class TetrisGame{
                         if (block.y >= 0) this.field[block.y].push({piece: piece, block: block}); 
                     }
                 }
-                this.field.forEach(function(line){
+                for (var line of this.field){
                     if (line.length > FIELD_LENGTH){
                         this.removeAnimation = true;
                         this.removableLines.push(line);
                     }
-                });
-    
-                this.pieces.forEach(function(piece){
+                }
+                for (var piece of this.pieces){
                     if (piece.blocks.length == 0){
                         this.pieces.splice(this.pieces.indexOf(piece), 1);
                     }
-                });
+                }
             }else{
                 this.renderGame = true;
             }

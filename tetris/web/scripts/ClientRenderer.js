@@ -20,6 +20,9 @@ IMAGES[5].src = "img/piece_texture/piece_t.png";
 IMAGES[6].src = "img/piece_texture/piece_i_mid.png";
 IMAGES[7].src = "img/piece_texture/piece_i_top.png";
 
+var pieces = [];
+blink = false;
+
 function degreesToRadians(degrees){
     return degrees * (Math.PI/180);
 }
@@ -40,26 +43,29 @@ function renderBlock(type, block){
 }
 
 
-function render(pieces){
-    GAME_CONTEXT.clearRect(0, 0, CANVAS_PIXELS_WIDTH, CANVAS_PIXELS_HEIGHT);
-    pieces.forEach(function(piece){
-        piece.blocks.forEach(function(block){
-            renderBlock(piece.type, block);
-        });
-    });
-    renderGame = false;
-    
-    /*if (removeAnimation){
+function render(removeLineCounter, removableLines){
+    console.log(removeLineCounter);
+    if (removeLineCounter != 0){
         if (removeLineCounter % 10 == 0){ blink = !blink; }
-        removableLines.forEach(function(line){
-            line.forEach(function(item){
+        for (var line of removableLines){
+            for (var item of line){
                 if (blink){
                     GAME_CONTEXT.fillStyle = "#C3CFA1";
                     GAME_CONTEXT.fillRect(item.block.x * BLOCK_SIZE, item.block.y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);   
                 }else{
                     renderBlock(item.piece.type, item.block);
                 }
-            });
-        });
-    }*/
+            }
+        }
+        return;
+    }
+
+    GAME_CONTEXT.clearRect(0, 0, CANVAS_PIXELS_WIDTH, CANVAS_PIXELS_HEIGHT);
+    for (var piece of pieces){
+        for (var block of piece.blocks){
+            renderBlock(piece.type, block);
+        }
+    }
+    renderGame = false;
+    
 }
