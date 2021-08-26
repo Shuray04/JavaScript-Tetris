@@ -1,5 +1,6 @@
+const TetrisGame = require('./game/TetrisGame.js');
+
 var express = require('express');
-var tetris = require("./TetrisGame.js");
 const APP = express();
 APP.use(express.static(__dirname + '/web'));
 
@@ -14,11 +15,12 @@ IO.on('connection', function(socket){
     socket: socket,
     game: new TetrisGame()
   }
-  socket.send([1, 2, 3, 4, 5]);
   console.log("Connection from: ", socket.id);
   socket.on("message", (input) => {
-      connections[socket.id][game].update(input);
-      socket.send(connections[socket.id][game].pieces);
+      connections[socket.id].game.update(input);
+      if (connections[socket.id].game.renderGame){
+        socket.send(connections[socket.id].game.pieces);
+      }
     });
 });
 
@@ -29,10 +31,10 @@ HTTP.listen(8000, function(){
 
 
 setInterval(function(){
-  for (connection in connections){
-    if (!connections[connection].connected){
-      connections.splice(connection, 1);
+  /*for (connection of connections){
+    if (!connection.socket.connected){
+      delete connections(connection);
     }
-  }
-  console.log(connections.length);
+  }*/
+  console.log(Object.keys(connections).length);
 }, 1000);

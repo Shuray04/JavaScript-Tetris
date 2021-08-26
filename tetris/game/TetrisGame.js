@@ -1,7 +1,31 @@
+const Piece = require('./Piece.js');
+
+const FIELD_HEIGHT = 17;
+const FIELD_LENGTH = 9;
+
+function createBag(){
+    var newBag = [Math.floor(Math.random() * 7)];
+    for (var i = 0; i < 6; i++){
+        var isNew = false;
+        var newItem = 0;
+        while (!isNew){
+            newItem = Math.floor(Math.random() * 7);
+            for (var item in newBag){
+                if (newItem == newBag[item]){
+                    isNew = false;
+                    break;
+                }else{
+                    isNew = true;
+                }
+            }
+        }
+        newBag.push(newItem);
+    }
+    return newBag;
+}
+
 class TetrisGame{
     constructor(){
-        this.FIELD_LENGTH = 9;
-        this.FIELD_HEIGHT = 17;
         this.pieces = [];
         this.currentPiece = null;
 
@@ -15,7 +39,7 @@ class TetrisGame{
         this.removeLineCounter = 0; //93 Frames per removed line
 
         this.renderGame = false;
-        this.gameStarted = false;
+        //this.gameStarted = false;
 
         this.removeAnimation = false;
         this.field = [];
@@ -24,110 +48,92 @@ class TetrisGame{
         this.bag = createBag();
     }
 
-    createBag(){
-        var newBag = [Math.floor(Math.random() * 7)];
-        for (var i = 0; i < 6; i++){
-            var isNew = false;
-            var newItem = 0;
-            while (!isNew){
-                newItem = Math.floor(Math.random() * 7);
-                for (var item in newBag){
-                    if (newItem == newBag[item]){
-                        isNew = false;
-                        break;
-                    }else{
-                        isNew = true;
-                    }
-                }
-            }
-            newBag.push(newItem);
-        }
-        return newBag;
-    }
-
     update(input){
         //Updates the remove Animation if a piece is removed
-        if (removeAnimation){
-            removeLineCounter++;
-            if (removeLineCounter >= 93){
-                removableLines.forEach(function(line){
+        if (this.removeAnimation){
+            this.removeLineCounter++;
+            if (this.removeLineCounter >= 93){
+                this.removableLines.forEach(function(line){
                     line.forEach(function(item){ item.piece.blocks.splice(item.piece.blocks.indexOf(item.block), 1); });
-                    pieces.forEach(function(piece){
+                    this.pieces.forEach(function(piece){
                         piece.blocks.forEach(function(block){
-                            if (block.y < field.indexOf(line)) block.y++;
+                            if (block.y < this.field.indexOf(line)) block.y++;
                         });
                     });
                 });
-                removableLines = [];
-                removeLineCounter = 0;
-                renderGame = true;
-                removeAnimation = false;
+                this.removableLines = [];
+                this.removeLineCounter = 0;
+                this.renderGame = true;
+                this.removeAnimation = false;
             }
             return;
         }
     
         //Checks if a new piece has to be spawned
-        if (currentPiece == null){
-            if (bag.length == 0){
-                bag = createBag();
+        if (this.currentPiece == null){
+            if (this.bag.length == 0){
+                this.bag = createBag();
             }
-            currentPiece = new Piece(bag[0]);
-            bag.splice(0, 1);
-            pieces.push(currentPiece);
-            renderGame = true;
+            this.currentPiece = new Piece(this.bag[0]);
+            this.bag.splice(0, 1);
+            this.pieces.push(this.currentPiece);
+            this.renderGame = true;
         }
     
         //player input handling
-        if (input[right] && moveTimer > moveDelay){
-            currentPiece.moveRight();
-            moveTimer = 0;
+        if (input.right && this.moveTimer > this.moveDelay){
+            this.currentPiece.moveRight(this.pieces);
+            this.moveTimer = 0;
         }
-        if (input[left] && moveTimer > moveDelay){
-            currentPiece.moveLeft();
-            moveTimer = 0;
+        if (input.left && this.moveTimer > this.moveDelay){
+            this.currentPiece.moveLeft(this.pieces);
+            this.moveTimer = 0;
         }
-        if (input[down]){
-            currentPiece.moveDown();
+        if (input.down){
+            this.currentPiece.moveDown(this.pieces);
         }
-        if (input[up] && rotationTimer > rotationDelay){
-            currentPiece.rotate();
-            rotationTimer = 0;
+        if (input.up && this.rotationTimer > this.rotationDelay){
+            this.currentPiece.rotate(this.pieces);
+            this.rotationTimer = 0;
         }
     
         //applying gravity
-        if (gravityTimer > gravityDelay){
-            if (!currentPiece.moveDown()){
-                currentPiece.blocks.forEach(function(block){
+        if (this.gravityTimer > this.gravityDelay){
+            if (!this.currentPiece.moveDown(this.pieces)){
+                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                this.currentPiece.blocks.forEach(function(block){
                     if (block.y == 1){
-                        pieces = [];
+                        this.pieces = [];
                         return;
                     }
                 });
-                currentPiece = null;
-                field = [];
-                for (var i = 0; i <= FIELD_HEIGHT; i++) field.push([]);
-                pieces.forEach(function(piece){
+                this.currentPiece = null;
+                this.field = [];
+                for (var i = 0; i <= FIELD_HEIGHT; i++) this.field.push([]);
+                this.pieces.forEach(function(piece){
                     piece.blocks.forEach(function(block){
-                        if (block.y >= 0) field[block.y].push({piece: piece, block: block}); 
+                        if (block.y >= 0) this.field[block.y].push({piece: piece, block: block}); 
                     });
                 });
-                field.forEach(function(line){
+                this.field.forEach(function(line){
                     if (line.length > FIELD_LENGTH){
-                        removeAnimation = true;
-                        removableLines.push(line);
+                        this.removeAnimation = true;
+                        this.removableLines.push(line);
                     }
                 });
     
-                pieces.forEach(function(piece){
+                this.pieces.forEach(function(piece){
                     if (piece.blocks.length == 0){
-                        pieces.splice(pieces.indexOf(piece), 1);
+                        this.pieces.splice(this.pieces.indexOf(piece), 1);
                     }
                 });
             }
-            gravityTimer = 0;
+            this.gravityTimer = 0;
         }
-        moveTimer++;
-        gravityTimer++;
-        rotationTimer++;
+        this.moveTimer++;
+        this.gravityTimer++;
+        this.rotationTimer++;
     }
 }
+
+module.exports = TetrisGame;

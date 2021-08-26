@@ -8,18 +8,8 @@ const CANVAS_PIXELS_WIDTH = 160;
 const CANVAS_PIXELS_HEIGHT = 144;
 const BLOCK_SIZE = 8;
 
-const PIECE_Z = 0;
-const PIECE_J = 1;
-const PIECE_L = 2;
-const PIECE_O = 3;
-const PIECE_S = 4;
-const PIECE_T = 5;
-const PIECE_I = 6;
-
-const rotationAngle = (Math.PI / 180) * -90;
-
 const IMAGES = [];
-for (var i = 0; i < 8; i++){ images.push(new Image(0, 0)); }
+for (var i = 0; i < 8; i++){ IMAGES.push(new Image(0, 0)); }
 
 IMAGES[0].src = "img/piece_texture/piece_z.png";
 IMAGES[1].src = "img/piece_texture/piece_j.png";
@@ -37,12 +27,12 @@ function degreesToRadians(degrees){
 function renderBlock(type, block){
     GAME_CONTEXT.translate(block.x * BLOCK_SIZE, block.y * BLOCK_SIZE);
     if (type != 6){
-        GAME_CONTEXT.drawImage(images[type], 0, 0, BLOCK_SIZE, BLOCK_SIZE);
+        GAME_CONTEXT.drawImage(IMAGES[type], 0, 0, BLOCK_SIZE, BLOCK_SIZE);
     }else{ //Piece is an I
 
         GAME_CONTEXT.translate(BLOCK_SIZE/2, BLOCK_SIZE/2);
         GAME_CONTEXT.rotate(degreesToRadians(block.rot));
-        GAME_CONTEXT.drawImage(images[block.texId], -BLOCK_SIZE/2, -BLOCK_SIZE/2, BLOCK_SIZE, BLOCK_SIZE);
+        GAME_CONTEXT.drawImage(IMAGES[block.texId], -BLOCK_SIZE/2, -BLOCK_SIZE/2, BLOCK_SIZE, BLOCK_SIZE);
         GAME_CONTEXT.rotate(degreesToRadians(-block.rot));
         GAME_CONTEXT.translate(-BLOCK_SIZE/2, -BLOCK_SIZE/2);
     }
@@ -59,7 +49,7 @@ function render(pieces){
     });
     renderGame = false;
     
-    if (removeAnimation){
+    /*if (removeAnimation){
         if (removeLineCounter % 10 == 0){ blink = !blink; }
         removableLines.forEach(function(line){
             line.forEach(function(item){
@@ -71,5 +61,5 @@ function render(pieces){
                 }
             });
         });
-    }
+    }*/
 }

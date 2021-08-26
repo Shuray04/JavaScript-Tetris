@@ -18,18 +18,17 @@ function demandGameUpdate(){
         right: isKeyPressed('ArrowRight')
     }
     if (!gameStarted){
-        for (key in input){
-            if (input){
-                gameStarted = True;
-                document.getElementById('main-menu').style.visibility = 'hidden';
-                document.getElementById('game-div').style.visibility = 'visible';
-                socket.send(input);
-                return;
-            }
+        if (isAnyKeyPressed()){
+            gameStarted = true;
+            document.getElementById('main-menu').style.visibility = 'hidden';
+            document.getElementById('game-div').style.visibility = 'visible';
+            socket.send(input);
+            return;
+            
         }
     }else{
         socket.send(input);
     }
 }
 
-window.setInterval(demandGameUpdate, 16);
+window.setInterval(demandGameUpdate, 50);

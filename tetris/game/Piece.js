@@ -1,3 +1,15 @@
+const PIECE_Z = 0;
+const PIECE_J = 1;
+const PIECE_L = 2;
+const PIECE_O = 3;
+const PIECE_S = 4;
+const PIECE_T = 5;
+const PIECE_I = 6;
+const FIELD_HEIGHT = 17;
+const FIELD_LENGTH = 9;
+
+const rotationAngle = (Math.PI / 180) * -90;
+
 class Piece{
     constructor(type){
         this.type = type;
@@ -12,34 +24,37 @@ class Piece{
         }
     }
     
-    moveDown(){
+    moveDown(pieces){
         const newBlocks = [];
         for (var i in this.blocks){ newBlocks[i] = Object.assign({}, this.blocks[i]); }
         newBlocks.forEach(block => block.y++);
-        if (!this.checkCollision(newBlocks)){ 
+        if (!this.checkCollision(newBlocks, pieces)){ 
             this.blocks = newBlocks; 
             return true;
         }
         return false;
     }
 
-    moveRight(){
+    moveRight(pieces){
         const newBlocks = [];
         for (var i in this.blocks){ newBlocks[i] = Object.assign({}, this.blocks[i]); }
         newBlocks.forEach(block => block.x++);
-        if (!this.checkCollision(newBlocks)) this.blocks = newBlocks;
+        if (!this.checkCollision(newBlocks, pieces)) this.blocks = newBlocks;
     }
 
-    moveLeft(){
+    moveLeft(pieces){
         const newBlocks = [];
         for (var i in this.blocks){ newBlocks[i] = Object.assign({}, this.blocks[i]); }
         newBlocks.forEach(block => block.x--);
-        if (!this.checkCollision(newBlocks)) this.blocks = newBlocks;
+        if (!this.checkCollision(newBlocks, pieces)) this.blocks = newBlocks;
     }
 
-    checkCollision(newBlocks){
+    checkCollision(newBlocks, pieces){
         for (var block in newBlocks){
-            if (newBlocks[block].x < 0 || newBlocks[block].x > FIELD_LENGTH || newBlocks[block].y > FIELD_HEIGHT) return true;
+            if (newBlocks[block].x < 0 || newBlocks[block].x > FIELD_LENGTH || newBlocks[block].y > FIELD_HEIGHT) {
+                console.log("dsfsdfsdfdsfdsf");
+                return true;
+            }
             for (var otherpieces in pieces){
                 if (this == pieces[otherpieces]) continue; 
                 for (var otherBlocks in pieces[otherpieces].blocks){
@@ -50,11 +65,11 @@ class Piece{
                 }
             }
         }
-        renderGame = true;
+        //renderGame = true;
         return false;
     }
 
-    rotate(){
+    rotate(pieces){
         if (this.type == PIECE_O) return; 
 
         var centerX = this.blocks[0].x;
@@ -72,7 +87,7 @@ class Piece{
                 y: Math.round(centerY + (blockX-centerX)*Math.sin(rotationAngle) + (blockY-centerY)*Math.cos(rotationAngle))
             });
         }
-        if (!this.checkCollision(newBlocks)){
+        if (!this.checkCollision(newBlocks, pieces)){
             if (this.type == PIECE_I){
                 for (var block in this.blocks){
                     newBlocks[block]["rot"] = this.blocks[block].rot+270;
@@ -83,3 +98,5 @@ class Piece{
         } 
     }
 }
+
+module.exports = Piece;
