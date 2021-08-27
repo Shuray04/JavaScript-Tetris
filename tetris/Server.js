@@ -31,6 +31,11 @@ IO.on('connection', function(socket){
     });
 });
 
+IO.on('disconnect', function(socket){
+  delete connections(connection);
+
+});
+
 HTTP.listen(8000, function(){
   console.log('Server listening');
 });
@@ -40,7 +45,6 @@ setInterval(function(){
   /*for (var connection of Object.entries(connections)){
     console.log(connection);
     /*if (!connection.[socket.connected]){
-      delete connections(connection);
     }
   }*/
   console.log(Object.keys(connections).length);
