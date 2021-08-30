@@ -1,2 +1,31 @@
+const TetrisGame = require('./TetrisGame.js');
+const { parentPort } = require('worker_threads');
 
+var game = new TetrisGame();
 
+running = false;
+
+function updateGame(input){
+
+    if (running){
+        game.update();
+        if (game.renderGame){
+            data = {
+                running: running,
+                currentPiece: game.currentPiece,
+                amountOfPieces: game.pieces.length,
+                removeLineCounter: game.removeLineCounter,
+                removableLines: game.removableLines,
+                resetBlocks: game.currentPiece == null ? false : game.pieces 
+            }
+            parentPort.postMessage(data);
+        }
+    }else{
+        if (input.any){
+            running = true;
+        }
+    }
+
+}
+
+var loop = setInterval(updateGame, 17);

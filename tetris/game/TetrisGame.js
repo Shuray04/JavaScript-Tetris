@@ -51,8 +51,8 @@ class TetrisGame{
         //Updates the remove Animation if a piece is removed
         this.renderGame = false;
         if (this.removeAnimation){
-            if (this.removeLineCounter % 10 == 0) this.renderGame = true;
             this.removeLineCounter++;
+            if (this.removeLineCounter % 10 == 0) this.renderGame = true;
             if (this.removeLineCounter >= 93){
                 for (var line of this.removableLines){
                     for (var item of line) item.piece.blocks.splice(item.piece.blocks.indexOf(item.block), 1);
@@ -80,7 +80,7 @@ class TetrisGame{
         }
     
         //player input handling
-        if (input.right && this.moveTimer > this.moveDelay){
+        /*if (input.right && this.moveTimer > this.moveDelay){
             if (this.currentPiece.moveRight(this.pieces)) this.renderGame = true;
             this.moveTimer = 0;
         }
@@ -94,7 +94,7 @@ class TetrisGame{
         if (input.up && this.rotationTimer > this.rotationDelay){
             this.currentPiece.rotate(this.pieces);
             this.rotationTimer = 0;
-        }
+        }*/
     
         //applying gravity
         if (this.gravityTimer > this.gravityDelay){
@@ -102,6 +102,7 @@ class TetrisGame{
                 for (var block of this.currentPiece.blocks){
                     if (block.y == 1){
                         this.pieces = [];
+                        running = false;
                         return;
                     }
                 }

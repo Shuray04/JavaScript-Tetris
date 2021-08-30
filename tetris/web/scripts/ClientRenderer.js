@@ -21,7 +21,7 @@ IMAGES[6].src = "img/piece_texture/piece_i_mid.png";
 IMAGES[7].src = "img/piece_texture/piece_i_top.png";
 
 var pieces = [];
-blink = false;
+blink = true;
 
 function degreesToRadians(degrees){
     return degrees * (Math.PI/180);
@@ -31,8 +31,7 @@ function renderBlock(type, block){
     GAME_CONTEXT.translate(block.x * BLOCK_SIZE, block.y * BLOCK_SIZE);
     if (type != 6){
         GAME_CONTEXT.drawImage(IMAGES[type], 0, 0, BLOCK_SIZE, BLOCK_SIZE);
-    }else{ //Piece is an I
-
+    }else{ //Piece is an 
         GAME_CONTEXT.translate(BLOCK_SIZE/2, BLOCK_SIZE/2);
         GAME_CONTEXT.rotate(degreesToRadians(block.rot));
         GAME_CONTEXT.drawImage(IMAGES[block.texId], -BLOCK_SIZE/2, -BLOCK_SIZE/2, BLOCK_SIZE, BLOCK_SIZE);
@@ -44,8 +43,7 @@ function renderBlock(type, block){
 
 
 function render(removeLineCounter, removableLines){
-    console.log(removeLineCounter);
-    if (removeLineCounter != 0){
+    if (removeLineCounter > 0){
         if (removeLineCounter % 10 == 0){ blink = !blink; }
         for (var line of removableLines){
             for (var item of line){
@@ -66,6 +64,4 @@ function render(removeLineCounter, removableLines){
             renderBlock(piece.type, block);
         }
     }
-    renderGame = false;
-    
 }

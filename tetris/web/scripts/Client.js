@@ -1,17 +1,23 @@
 const socket = io();
 var gameStarted = false;
 var storedPieces = [];
-
-var startTime = 0;
-var endTime = 0;
+var running = false;
 
 socket.on("connect", () => {
     console.log("biiiit connneeeect");
 });
 
 socket.on("message", (data) => {
-    endTime = Date.now();
-    console.log("received package in: ", endTime - startTime);
+    if (data.running != running){
+        running = !running;
+        if (running){
+            document.getElementById('main-menu').style.visibility = 'hidden';
+            document.getElementById('game-div').style.visibility = 'visible';
+        }else{
+            document.getElementById('main-menu').style.visibility = 'visible';
+            document.getElementById('game-div').style.visibility = 'hidden';
+        }
+    }
     if (pieces.length < data.amountOfPieces && data.currentPiece != null){
         pieces.push(data.currentPiece);
     }else if (pieces.length = data.amountOfPieces && data.currentPiece != null){
@@ -21,6 +27,7 @@ socket.on("message", (data) => {
         pieces = data.resetBlocks;
     }
     render(data.removeLineCounter, data.removableLines);
+    console.log("sdfsdf");
 });
 
 function demandGameUpdate(){
@@ -28,13 +35,12 @@ function demandGameUpdate(){
         up: isKeyPressed('ArrowUp'),
         down: isKeyPressed('ArrowDown'),
         left: isKeyPressed('ArrowLeft'),
-        right: isKeyPressed('ArrowRight')
+        right: isKeyPressed('ArrowRight'),
+        any: isAnyKeyPressed()
     }
     if (!gameStarted){
         if (isAnyKeyPressed()){
             gameStarted = true;
-            document.getElementById('main-menu').style.visibility = 'hidden';
-            document.getElementById('game-div').style.visibility = 'visible';
             //socket.send(input);
             return;
         }
@@ -44,4 +50,4 @@ function demandGameUpdate(){
     }
 }
 
-window.setInterval(demandGameUpdate, 17);
+//window.setInterval(demandGameUpdate, 17);

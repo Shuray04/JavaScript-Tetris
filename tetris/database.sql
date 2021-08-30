@@ -5,6 +5,6 @@ CREATE TABLE highscore(
     player_name VARCHAR (18),
     score INT,
     primary key(id)
-);
+); 
 
 INSERT INTO highscore(player_name, score) VALUES ("Andri", 22);
