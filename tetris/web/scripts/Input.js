@@ -1,18 +1,31 @@
-const KEYS = [];
+var input = {
+    "ArrowUp": false,
+    "ArrowDown": false,
+    "ArrowLeft": false,
+    "ArrowRight": false,
+    "Any": false,
+}
 
 window.onkeyup = function(e) {
-     KEYS[e.key] = false; 
+    if (e.key == "ArrowUp" ||
+        e.key == "ArrowDown" || 
+        e.key == "ArrowLeft" ||
+        e.key == "ArrowRight"){
+        input[e.key] = false;
+    }else{
+        input[Any] = false;
+    }
+    socket.send(input);
 }
 
 window.onkeydown = function(e) {
-     KEYS[e.key] = true; 
-}
-
-function isAnyKeyPressed(){
-    for (var key in KEYS){
-        if (KEYS[key]) return true;
+    if (e.key == "ArrowUp" ||
+        e.key == "ArrowDown" || 
+        e.key == "ArrowLeft" ||
+        e.key == "ArrowRight"){
+        input[e.key] = true;
+    }else{
+        input[Any] = true;
     }
-    return false;
+    socket.send(input);
 }
-
-function isKeyPressed(key){ return KEYS[key]; }

@@ -3,10 +3,9 @@ const { parentPort } = require('worker_threads');
 
 var game = new TetrisGame();
 
-running = false;
+var running = false;
 
 function updateGame(input){
-
     if (running){
         game.update();
         if (game.renderGame){

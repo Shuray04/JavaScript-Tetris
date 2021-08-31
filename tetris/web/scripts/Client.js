@@ -1,10 +1,7 @@
 const socket = io();
-var gameStarted = false;
-var storedPieces = [];
-var running = false;
 
 socket.on("connect", () => {
-    console.log("biiiit connneeeect");
+    console.log("bit connneeeect");
 });
 
 socket.on("message", (data) => {
@@ -30,24 +27,5 @@ socket.on("message", (data) => {
     console.log("sdfsdf");
 });
 
-function demandGameUpdate(){
-    var input = {
-        up: isKeyPressed('ArrowUp'),
-        down: isKeyPressed('ArrowDown'),
-        left: isKeyPressed('ArrowLeft'),
-        right: isKeyPressed('ArrowRight'),
-        any: isAnyKeyPressed()
-    }
-    if (!gameStarted){
-        if (isAnyKeyPressed()){
-            gameStarted = true;
-            //socket.send(input);
-            return;
-        }
-    }else{
-        socket.send(input);
-        startTime = Date.now();
-    }
-}
 
 //window.setInterval(demandGameUpdate, 17);
