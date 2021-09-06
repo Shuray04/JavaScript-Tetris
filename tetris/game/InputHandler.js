@@ -15,3 +15,4 @@ class InputHandler{
     }
 }
 
+module.exports = TetrisGame;

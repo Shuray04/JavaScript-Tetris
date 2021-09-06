@@ -1,13 +1,14 @@
 const TetrisGame = require('./TetrisGame.js');
+const InputHandler = require('./InputHandler.js');
 const { parentPort } = require('worker_threads');
 
 var game = new TetrisGame();
-
+var input = new InputHandler();
 var running = false;
 
-function updateGame(input){
+function updateGame(){
     if (running){
-        game.update();
+        game.update(input.input);
         if (game.renderGame){
             data = {
                 running: running,

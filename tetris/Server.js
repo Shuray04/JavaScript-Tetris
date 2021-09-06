@@ -1,4 +1,3 @@
-const inputHandler = require('./game/InputHandler.js');
 const { Worker } = require('worker_threads');
 const express = require('express');
 const APP = express();
@@ -11,7 +10,7 @@ var connections = {};
 
 IO.on('connection', function(socket){
   socket.on("message", (input) => {
-    socket.pause();
+    //socket.pause();
   });
 
   socket.on('disconnect', function(){
@@ -19,10 +18,10 @@ IO.on('connection', function(socket){
     console.log("Client disconnected: ", socket.id);
   });
 
-  socket.setTimeout(14);
+  /*socket.setTimeout(14);
   socket.on('timeout', () => {
     socket.resume();
-  });
+  });*/
   
 
   console.log("Connection from: ", socket.id);
@@ -34,8 +33,7 @@ IO.on('connection', function(socket){
 
   connections[socket.id] = {
     socket: socket,
-    thread: worker,
-    inputHandler: new InputHandler()
+    thread: worker
   }
 });
 
