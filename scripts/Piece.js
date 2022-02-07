@@ -5,10 +5,20 @@ const PIECE_O = 3;
 const PIECE_S = 4;
 const PIECE_T = 5;
 const PIECE_I = 6;
-const FIELD_HEIGHT = 17;
-const FIELD_LENGTH = 9;
 
 const rotationAngle = (Math.PI / 180) * -90;
+
+const images = [];
+for (var i = 0; i < 8; i++){ images.push(new Image(0, 0)); }
+
+images[0].src = "img/piece_texture/piece_z.png";
+images[1].src = "img/piece_texture/piece_j.png";
+images[2].src = "img/piece_texture/piece_l.png";
+images[3].src = "img/piece_texture/piece_o.png";
+images[4].src = "img/piece_texture/piece_s.png";
+images[5].src = "img/piece_texture/piece_t.png";
+images[6].src = "img/piece_texture/piece_i_mid.png";
+images[7].src = "img/piece_texture/piece_i_top.png";
 
 class Piece{
     constructor(type){
@@ -24,47 +34,34 @@ class Piece{
         }
     }
     
-    moveDown(pieces){
+    moveDown(){
         const newBlocks = [];
         for (var i in this.blocks){ newBlocks[i] = Object.assign({}, this.blocks[i]); }
         newBlocks.forEach(block => block.y++);
-        if (this.checkCollision(newBlocks, pieces)){ 
-            return false;
-        }else{
-            this.blocks = newBlocks;
+        if (!this.checkCollision(newBlocks)){ 
+            this.blocks = newBlocks; 
             return true;
         }
+        return false;
     }
 
-    moveRight(pieces){
+    moveRight(){
         const newBlocks = [];
         for (var i in this.blocks){ newBlocks[i] = Object.assign({}, this.blocks[i]); }
         newBlocks.forEach(block => block.x++);
-        if (this.checkCollision(newBlocks, pieces)){ 
-            return false;
-        }else{
-            this.blocks = newBlocks;
-            return true;
-        }
+        if (!this.checkCollision(newBlocks)) this.blocks = newBlocks;
     }
 
-    moveLeft(pieces){
+    moveLeft(){
         const newBlocks = [];
         for (var i in this.blocks){ newBlocks[i] = Object.assign({}, this.blocks[i]); }
         newBlocks.forEach(block => block.x--);
-        if (this.checkCollision(newBlocks, pieces)){ 
-            return false;
-        }else{
-            this.blocks = newBlocks;
-            return true;
-        }
+        if (!this.checkCollision(newBlocks)) this.blocks = newBlocks;
     }
 
-    checkCollision(newBlocks, pieces){
+    checkCollision(newBlocks){
         for (var block in newBlocks){
-            if (newBlocks[block].x < 0 || newBlocks[block].x > FIELD_LENGTH || newBlocks[block].y > FIELD_HEIGHT) {
-                return true;
-            }
+            if (newBlocks[block].x < 0 || newBlocks[block].x > FIELD_LENGTH || newBlocks[block].y > FIELD_HEIGHT) return true;
             for (var otherpieces in pieces){
                 if (this == pieces[otherpieces]) continue; 
                 for (var otherBlocks in pieces[otherpieces].blocks){
@@ -75,10 +72,11 @@ class Piece{
                 }
             }
         }
+        renderGame = true;
         return false;
     }
 
-    rotate(pieces){
+    rotate(){
         if (this.type == PIECE_O) return; 
 
         var centerX = this.blocks[0].x;
@@ -96,7 +94,7 @@ class Piece{
                 y: Math.round(centerY + (blockX-centerX)*Math.sin(rotationAngle) + (blockY-centerY)*Math.cos(rotationAngle))
             });
         }
-        if (!this.checkCollision(newBlocks, pieces)){
+        if (!this.checkCollision(newBlocks)){
             if (this.type == PIECE_I){
                 for (var block in this.blocks){
                     newBlocks[block]["rot"] = this.blocks[block].rot+270;
@@ -107,5 +105,3 @@ class Piece{
         } 
     }
 }
-
-module.exports = Piece;
