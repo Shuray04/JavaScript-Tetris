@@ -1,10 +1,12 @@
 var fps = 0;
 
+var game = new TetrisGame();
+var gameStarted = false;
 
-function processGame(){
+function processGame() {
     if (gameStarted){
-        update();
-        render();
+        game.update();
+        game.render();
     }else{
         gameStarted = isAnyKeyPressed();
         if (gameStarted){
@@ -15,7 +17,7 @@ function processGame(){
     fps++;
 }
 
-function resetFps(){
+function resetFps() {
     console.log("FPS: " + fps);
     fps = 0;
 }

@@ -10,4 +10,13 @@ function isAnyKeyPressed(){
     return false;
 }
 
+function isKeysPressed(keys) {
+    for (key of keys) {
+        if (KEYS[key]) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function isKeyPressed(key){ return KEYS[key]; }

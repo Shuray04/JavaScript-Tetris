@@ -6,7 +6,9 @@ const PIECE_S = 4;
 const PIECE_T = 5;
 const PIECE_I = 6;
 
-const rotationAngle = (Math.PI / 180) * -90;
+const ROTATION_ANGLE = (Math.PI / 180) * -90;
+const ROTATION_COS = Math.cos(ROTATION_ANGLE);
+const ROTATION_SIN = Math.sin(ROTATION_ANGLE);
 
 const images = [];
 for (var i = 0; i < 8; i++){ images.push(new Image(0, 0)); }
@@ -21,9 +23,9 @@ images[6].src = "img/piece_texture/piece_i_mid.png";
 images[7].src = "img/piece_texture/piece_i_top.png";
 
 class Piece{
-    constructor(type){
+    constructor(type) {
         this.type = type;
-        switch(type){
+        switch(type) {
             case PIECE_J: this.blocks = [{x: 4, y: 1}, {x: 3, y: 1}, {x: 5, y: 1}, {x: 5, y: 2}]; break;
             case PIECE_L: this.blocks = [{x: 4, y: 1}, {x: 3, y: 1}, {x: 5, y: 1}, {x: 3, y: 2}]; break;
             case PIECE_O: this.blocks = [{x: 4, y: 1}, {x: 5, y: 1}, {x: 4, y: 2}, {x: 5, y: 2}]; break;
@@ -34,50 +36,65 @@ class Piece{
         }
     }
     
-    moveDown(){
+    moveDown(pieces) {
         const newBlocks = [];
-        for (var i in this.blocks){ newBlocks[i] = Object.assign({}, this.blocks[i]); }
+        for (var i in this.blocks) {
+            newBlocks[i] = Object.assign({}, this.blocks[i]);
+        }
         newBlocks.forEach(block => block.y++);
-        if (!this.checkCollision(newBlocks)){ 
+        if (!this.checkCollision(newBlocks, pieces)) { 
             this.blocks = newBlocks; 
             return true;
         }
         return false;
     }
 
-    moveRight(){
+    moveRight(pieces) {
         const newBlocks = [];
-        for (var i in this.blocks){ newBlocks[i] = Object.assign({}, this.blocks[i]); }
+        for (var i in this.blocks) {
+            newBlocks[i] = Object.assign({}, this.blocks[i]); 
+        }
         newBlocks.forEach(block => block.x++);
-        if (!this.checkCollision(newBlocks)) this.blocks = newBlocks;
+        if (!this.checkCollision(newBlocks, pieces)) {
+            this.blocks = newBlocks;
+        } 
     }
 
-    moveLeft(){
+    moveLeft(pieces) {
         const newBlocks = [];
-        for (var i in this.blocks){ newBlocks[i] = Object.assign({}, this.blocks[i]); }
+        for (var i in this.blocks) { 
+            newBlocks[i] = Object.assign({}, this.blocks[i]); 
+        }
         newBlocks.forEach(block => block.x--);
-        if (!this.checkCollision(newBlocks)) this.blocks = newBlocks;
+        if (!this.checkCollision(newBlocks, pieces)) {
+            this.blocks = newBlocks;
+        }
     }
 
-    checkCollision(newBlocks){
-        for (var block in newBlocks){
-            if (newBlocks[block].x < 0 || newBlocks[block].x > FIELD_LENGTH || newBlocks[block].y > FIELD_HEIGHT) return true;
-            for (var otherpieces in pieces){
-                if (this == pieces[otherpieces]) continue; 
-                for (var otherBlocks in pieces[otherpieces].blocks){
-                    if (newBlocks[block].y == pieces[otherpieces].blocks[otherBlocks].y 
-                        && newBlocks[block].x == pieces[otherpieces].blocks[otherBlocks].x){
+    checkCollision(newBlocks, pieces) {
+        for (var block in newBlocks) {
+            if (newBlocks[block].x < 0 || newBlocks[block].x > FIELD_LENGTH || newBlocks[block].y > FIELD_HEIGHT) {
+                return true;
+            }
+            for (var otherPiece in pieces) {
+                if (this == pieces[otherPiece]) {
+                    continue; 
+                } 
+                for (var otherBlocks in pieces[otherPiece].blocks) { 
+                    if (newBlocks[block].y == pieces[otherPiece].blocks[otherBlocks].y 
+                        && newBlocks[block].x == pieces[otherPiece].blocks[otherBlocks].x) {
                         return true;
                     }
                 }
             }
         }
-        renderGame = true;
         return false;
     }
 
-    rotate(){
-        if (this.type == PIECE_O) return; 
+    rotate(pieces) {
+        if (this.type == PIECE_O) {
+            return; 
+        }
 
         var centerX = this.blocks[0].x;
         var centerY = this.blocks[0].y;
@@ -85,18 +102,20 @@ class Piece{
 
         newBlocks.push({x: this.blocks[0].x, y: this.blocks[0].y});
 
-        for (var block in this.blocks){
-            if (block == 0) continue;
+        for (var block in this.blocks) {
+            if (block == 0) {
+                continue;
+            }
             var blockX = this.blocks[block].x;
             var blockY = this.blocks[block].y;
             newBlocks.push({
-                x: Math.round(centerX + (blockX-centerX)*Math.cos(rotationAngle) - (blockY-centerY)*Math.sin(rotationAngle)),
-                y: Math.round(centerY + (blockX-centerX)*Math.sin(rotationAngle) + (blockY-centerY)*Math.cos(rotationAngle))
+                x: Math.round(centerX + (blockX-centerX)*ROTATION_COS - (blockY-centerY)*ROTATION_SIN),
+                y: Math.round(centerY + (blockX-centerX)*ROTATION_SIN + (blockY-centerY)*ROTATION_COS)
             });
         }
-        if (!this.checkCollision(newBlocks)){
-            if (this.type == PIECE_I){
-                for (var block in this.blocks){
+        if (!this.checkCollision(newBlocks, pieces)) {
+            if (this.type == PIECE_I) {
+                for (var block in this.blocks) {
                     newBlocks[block]["rot"] = this.blocks[block].rot+270;
                     newBlocks[block]["texId"] = this.blocks[block].texId;
                 }
