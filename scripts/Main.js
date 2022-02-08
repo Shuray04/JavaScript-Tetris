@@ -1,7 +1,7 @@
-var fps = 0;
+let fps = 0;
 
-var game = new TetrisGame();
-var gameStarted = false;
+let game = new TetrisGame();
+let gameStarted = false;
 
 function processGame() {
     if (gameStarted){

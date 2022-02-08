@@ -11,7 +11,7 @@ const ROTATION_COS = Math.cos(ROTATION_ANGLE);
 const ROTATION_SIN = Math.sin(ROTATION_ANGLE);
 
 const images = [];
-for (var i = 0; i < 8; i++){ images.push(new Image(0, 0)); }
+for (let i = 0; i < 8; i++){ images.push(new Image(0, 0)); }
 
 images[0].src = "img/piece_texture/piece_z.png";
 images[1].src = "img/piece_texture/piece_j.png";
@@ -38,7 +38,7 @@ class Piece{
     
     moveDown(pieces) {
         const newBlocks = [];
-        for (var i in this.blocks) {
+        for (let i in this.blocks) {
             newBlocks[i] = Object.assign({}, this.blocks[i]);
         }
         newBlocks.forEach(block => block.y++);
@@ -51,7 +51,7 @@ class Piece{
 
     moveRight(pieces) {
         const newBlocks = [];
-        for (var i in this.blocks) {
+        for (let i in this.blocks) {
             newBlocks[i] = Object.assign({}, this.blocks[i]); 
         }
         newBlocks.forEach(block => block.x++);
@@ -62,7 +62,7 @@ class Piece{
 
     moveLeft(pieces) {
         const newBlocks = [];
-        for (var i in this.blocks) { 
+        for (let i in this.blocks) { 
             newBlocks[i] = Object.assign({}, this.blocks[i]); 
         }
         newBlocks.forEach(block => block.x--);
@@ -72,15 +72,15 @@ class Piece{
     }
 
     checkCollision(newBlocks, pieces) {
-        for (var block in newBlocks) {
+        for (let block in newBlocks) {
             if (newBlocks[block].x < 0 || newBlocks[block].x > FIELD_LENGTH || newBlocks[block].y > FIELD_HEIGHT) {
                 return true;
             }
-            for (var otherPiece in pieces) {
+            for (let otherPiece in pieces) {
                 if (this == pieces[otherPiece]) {
                     continue; 
                 } 
-                for (var otherBlocks in pieces[otherPiece].blocks) { 
+                for (let otherBlocks in pieces[otherPiece].blocks) { 
                     if (newBlocks[block].y == pieces[otherPiece].blocks[otherBlocks].y 
                         && newBlocks[block].x == pieces[otherPiece].blocks[otherBlocks].x) {
                         return true;
@@ -96,18 +96,18 @@ class Piece{
             return; 
         }
 
-        var centerX = this.blocks[0].x;
-        var centerY = this.blocks[0].y;
-        var newBlocks = [];
+        let centerX = this.blocks[0].x;
+        let centerY = this.blocks[0].y;
+        let newBlocks = [];
 
         newBlocks.push({x: this.blocks[0].x, y: this.blocks[0].y});
 
-        for (var block in this.blocks) {
+        for (let block in this.blocks) {
             if (block == 0) {
                 continue;
             }
-            var blockX = this.blocks[block].x;
-            var blockY = this.blocks[block].y;
+            let blockX = this.blocks[block].x;
+            let blockY = this.blocks[block].y;
             newBlocks.push({
                 x: Math.round(centerX + (blockX-centerX)*ROTATION_COS - (blockY-centerY)*ROTATION_SIN),
                 y: Math.round(centerY + (blockX-centerX)*ROTATION_SIN + (blockY-centerY)*ROTATION_COS)
@@ -115,7 +115,7 @@ class Piece{
         }
         if (!this.checkCollision(newBlocks, pieces)) {
             if (this.type == PIECE_I) {
-                for (var block in this.blocks) {
+                for (let block in this.blocks) {
                     newBlocks[block]["rot"] = this.blocks[block].rot+270;
                     newBlocks[block]["texId"] = this.blocks[block].texId;
                 }

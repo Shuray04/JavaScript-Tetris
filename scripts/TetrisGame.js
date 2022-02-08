@@ -37,26 +37,21 @@ class TetrisGame {
         this.score = 0;
         this.totalLines = 0;
         
-        this.bag = [];
-        this.createBag();
-        console.log("Helo");
+        this.bag = [0, 1, 2, 3, 4, ,5 ,6].sort((a, b) => 0.5 - Math.random());
     }
 
-    createBag() {
-        this.bag = [3, 3, 3, 3, 3, 3, 3].sort((a, b) => 0.5 - Math.random());     
-    }
 
     update() {
         //Updates the remove Animation if a piece is removed
         if (this.removeAnimation) {
             this.removeLineCounter++;
             if (this.removeLineCounter >= REMOVE_ANIMATION_FRAMES) {
-                for (var line of this.removableLines) {
-                    for (var item of line) { 
+                for (let line of this.removableLines) {
+                    for (let item of line) { 
                         item.piece.blocks.splice(item.piece.blocks.indexOf(item.block), 1); 
                     }
-                    for (var piece of this.pieces) {
-                        for (var block of piece.blocks) {
+                    for (let piece of this.pieces) {
+                        for (let block of piece.blocks) {
                             if (block.y < this.field.indexOf(line)) {
                                 block.y++;
                             }
@@ -74,7 +69,7 @@ class TetrisGame {
         //Checks if a new piece has to be spawned
         if (this.currentPiece == null) {
             if (this.bag.length == 0) {
-                this.bag = this.createBag();
+                this.bag = [0, 1, 2, 3, 4, ,5 ,6].sort((a, b) => 0.5 - Math.random());
             }
             this.currentPiece = new Piece(this.bag[0]);
             this.bag.splice(0, 1);
@@ -107,7 +102,7 @@ class TetrisGame {
         if (this.gravityTimer > this.gravityDelay) {
             this.renderGame = true;
             if (!this.currentPiece.moveDown(this.pieces)) {
-                for (var block of this.currentPiece.blocks) {
+                for (let block of this.currentPiece.blocks) {
                     if (block.y == 1){
                         this.pieces = [];
                         return;
@@ -115,18 +110,18 @@ class TetrisGame {
                 }
                 this.currentPiece = null;
                 this.field = [];
-                for (var i = 0; i <= FIELD_HEIGHT; i++) {
+                for (let i = 0; i <= FIELD_HEIGHT; i++) {
                     this.field.push([]);
                 } 
-                for (var piece of this.pieces) {
-                    for (var block of piece.blocks) {
+                for (let piece of this.pieces) {
+                    for (let block of piece.blocks) {
                         if (block.y >= 0) {
                             this.field[block.y].push({piece: piece, block: block});
                         }
                     }
                 }
-                var newCompletedLines = 0;
-                for (var line of this.field) {
+                let newCompletedLines = 0;
+                for (let line of this.field) {
                     if (line.length > FIELD_LENGTH){
                         this.removeAnimation = true;
                         this.removableLines.push(line);
@@ -135,7 +130,7 @@ class TetrisGame {
                     }
                 }
     
-                for (var piece of this.pieces) {
+                for (let piece of this.pieces) {
                     if (piece.blocks.length == 0){
                         this.pieces.splice(this.pieces.indexOf(piece), 1);
                     }
@@ -181,8 +176,8 @@ class TetrisGame {
     render() {
         if (this.renderGame) {
             GAME_CONTEXT.clearRect(0, 0, CANVAS_PIXELS_WIDTH, CANVAS_PIXELS_HEIGHT);
-            for (var piece of this.pieces) {
-                for (var block of piece.blocks) {
+            for (let piece of this.pieces) {
+                for (let block of piece.blocks) {
                     this.renderBlock(piece.type, block);
                 }
             }
@@ -192,8 +187,8 @@ class TetrisGame {
             if (this.removeLineCounter % 10 == 0) {
                 this.blink = !this.blink; 
             }
-            for (var line of this.removableLines) {
-                for (var item of line) {
+            for (let line of this.removableLines) {
+                for (let item of line) {
                     if (this.blink){
                         GAME_CONTEXT.fillStyle = "#C3CFA1";
                         GAME_CONTEXT.fillRect(item.block.x * BLOCK_SIZE, item.block.y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);   
